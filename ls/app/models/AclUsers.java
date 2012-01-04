@@ -10,8 +10,10 @@ import java.util.*;
 @Table(name="acl_users")
 public class AclUsers extends Model
 {
-	@Column(name="acl_roles_id")
-	public int aclRolesId;
+    @Required
+    @ManyToOne
+    @JoinColumn(name="acl_roles_id")
+	public AclRoles aclRolesId;
 	
 	@Column(name="user_name")
 	public String userName;
@@ -45,7 +47,7 @@ public class AclUsers extends Model
 	 * @return int
 	 */
 	@Column(name="acl_roles_id")
-	public int getAclRolesId()
+	public AclRoles getAclRolesId()
 	{
 		return aclRolesId;
 	}
@@ -55,7 +57,7 @@ public class AclUsers extends Model
 	 * 
 	 * @param aclRolesId
 	 */
-	public void setAclRolesId(int aclRolesId)
+	public void setAclRolesId(AclRoles aclRolesId)
 	{
 		this.aclRolesId = aclRolesId;
 	}

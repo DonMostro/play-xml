@@ -4,20 +4,23 @@ import java.util.*;
 import java.io.*;
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 import play.db.jpa.Model;
 
 @Entity
 @Table(name="acl_permissions")
-public class AclPermissions extends Model
+public class AclPermissions extends Model implements Serializable
 {
+	@JoinColumn(name="acl_roles_id")
+	public AclRoles aclRolesId;
 
-	@Column(name="acl_roles_id")
-	protected int aclRolesId;
+	@JoinColumn(name="acl_modules_id")
+	public AclModules aclModulesId;
 
-	@Column(name="acl_modules_id")
-	protected int aclModulesId;
-
-	protected String permission;
+	@JoinColumn(name="permission")
+	@JoinTable(name="WebPermissions")
+	public String permission;
 
 	/**
 	 * Method 'AclPermissions'
@@ -33,7 +36,7 @@ public class AclPermissions extends Model
 	 * @return int
 	 */
 	@Column(name="acl_roles_id")
-	public int getAclRolesId()
+	public AclRoles getAclRolesId()
 	{
 		return aclRolesId;
 	}
@@ -43,7 +46,7 @@ public class AclPermissions extends Model
 	 * 
 	 * @param aclRolesId
 	 */
-	public void setAclRolesId(int aclRolesId)
+	public void setAclRolesId(AclRoles aclRolesId)
 	{
 		this.aclRolesId = aclRolesId;
 	}
@@ -54,7 +57,7 @@ public class AclPermissions extends Model
 	 * @return int
 	 */
 	@Column(name="acl_modules_id")
-	public int getAclModulesId()
+	public AclModules getAclModulesId()
 	{
 		return aclModulesId;
 	}
@@ -64,7 +67,7 @@ public class AclPermissions extends Model
 	 * 
 	 * @param aclModulesId
 	 */
-	public void setAclModulesId(int aclModulesId)
+	public void setAclModulesId(AclModules aclModulesId)
 	{
 		this.aclModulesId = aclModulesId;
 	}
@@ -89,5 +92,4 @@ public class AclPermissions extends Model
 	{
 		this.permission = permission;
 	}
-
 }

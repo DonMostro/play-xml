@@ -4,7 +4,12 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /admin                                  Tasks.list
+GET     /admin                                  module:crud
+GET     /tasks                                  Tasks.list
+GET     /users                                  Users.list
+GET     /roles                                  roles.list
+GET     /modules                                Modules.list
+GET     /appsettings                            Settings.list
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

@@ -4,6 +4,7 @@ import play.*;
 import play.db.jpa.*;
 import play.data.validation.*;
 import javax.persistence.*;
+
 import java.util.*;
 
 @Entity
@@ -11,25 +12,27 @@ import java.util.*;
 public class AclModules extends Model
 {
 
-	@Column(name="parent_id")
-	protected int parentId;
+    @ManyToOne
+    @JoinColumn(name="parent_id")
+	public AclModules parentId;
 
-	protected String title;
+    public String title;
 
-	protected String module;
+    public String module;
 
-	protected String tree;
+    public String tree;
 
-	protected String linkable;
+    public String linkable;
 
-	protected String approved;
+    public String approved;
 
 	/**
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules()
+	public AclModules(String title)
 	{
+		this.title = title;
 	}
 
 	/**
@@ -38,7 +41,7 @@ public class AclModules extends Model
 	 * @return int
 	 */
 	@Column(name="parent_id")
-	public int getParentId()
+	public AclModules getParentId()
 	{
 		return parentId;
 	}
@@ -48,7 +51,7 @@ public class AclModules extends Model
 	 * 
 	 * @param parentId
 	 */
-	public void setParentId(int parentId)
+	public void setParentId(AclModules parentId)
 	{
 		this.parentId = parentId;
 	}
@@ -156,6 +159,11 @@ public class AclModules extends Model
 	public void setApproved(String approved)
 	{
 		this.approved = approved;
+	}
+	
+	
+	public String toString() {
+		return title;
 	}
 
 }

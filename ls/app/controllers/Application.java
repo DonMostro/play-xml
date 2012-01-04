@@ -8,22 +8,22 @@ import models.*;
 
 
 
-public class Application extends Controller {
-
+public class Application extends Controller 
+{
     public static void index() {
-    	List tasks = AclUsers.findAll();
+    	List tasks = Task.findAll();
         render(tasks);
     }
     
     public static void changeStatus(Long id, Boolean done) {
-    	AclUsers task = AclUsers.findById(id);
-    	task.approved = done;
+    	Task task = Task.findById(id);
+    	task.done = done;
     	task.save();
     	renderJSON(task);
     }
     
-	public static void createTask(String userName) {
-		AclUsers task = new AclUsers(userName).save();
+	public static void createTask(String title) {
+		Task task = new Task(title).save();
 		renderJSON(task);
 		
 	}

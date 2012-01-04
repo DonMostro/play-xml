@@ -7,17 +7,17 @@
 <ul>
     #{list items:tasks, as:'task'}
     <li>
-        <input type="checkbox" id="${task.id}" ${task.approved ? 'checked' : ''}/>
-        ${task.userName} 
+        <input type="checkbox" id="${task.id}" ${task.done ? 'checked' : ''}/>
+        ${task.title} 
     </li>
     #{/list}
 </ul>
-<a id="createTask" href="#">Crear un usuario</a>
+<a id="createTask" href="#">Crear tarea</a>
 <script language="javascript" type="text/javascript">
 	$('#createTask').click(function(){
 	    $.post('@{createTask()}', {title: prompt('Nombre de Usuario ?')}, function(task){
 	        $('ul').prepend(
-	     		  '<li><input type="checkbox" id="'+task.id+'"/>'+task.userName+'</li>' 
+	     		  '<li><input type="checkbox" id="'+task.id+'"/>'+task.title+'</li>' 
 	        )
 	    }, 'json')
 	})

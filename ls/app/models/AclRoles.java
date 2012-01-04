@@ -1,26 +1,29 @@
 package models;
 
-import java.util.*;
-import java.io.*;
+import play.*;
+import play.db.jpa.*;
+import play.data.validation.*;
 import javax.persistence.*;
-
-import play.db.jpa.Model;
+import java.util.*;
 
 @Entity
 @Table(name="acl_roles")
 public class AclRoles extends Model
 {
-	@Column(name="role_name")
-	protected String roleName;
 
-	protected String root;
+	@Required
+	@MaxSize(20)
+	@MinSize(3)
+	@Column(name="role_name")
+	public String roleName;
 
 	/**
 	 * Method 'AclRoles'
 	 * 
 	 */
-	public AclRoles()
+	public AclRoles(String roleName)
 	{
+		this.roleName = roleName;
 	}
 
 	/**
@@ -28,7 +31,6 @@ public class AclRoles extends Model
 	 * 
 	 * @return String
 	 */
-	@Column(name="role_name")
 	public String getRoleName()
 	{
 		return roleName;
@@ -43,26 +45,9 @@ public class AclRoles extends Model
 	{
 		this.roleName = roleName;
 	}
-
-	/**
-	 * Method 'getRoot'
-	 * 
-	 * @return String
-	 */
-	@Column(name="root")
-	public String getRoot()
-	{
-		return root;
-	}
-
-	/**
-	 * Method 'setRoot'
-	 * 
-	 * @param root
-	 */
-	public void setRoot(String root)
-	{
-		this.root = root;
+	
+	public String toString() {
+		return roleName;
 	}
 
 }
