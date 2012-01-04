@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+#{ifnot tasks}
+    <p>No hay usuarios</p>
+#{/ifnot}
+<ul>
+    #{list items:tasks, as:'task'}
+    <li>
+        <input type="checkbox" id="${task.id}" ${task.approved ? 'checked' : ''}/>
+        ${task.userName} 
+    </li>
+    #{/list}
+</ul>
+<a id="createTask" href="#">Crear un usuario</a>
+<script language="javascript" type="text/javascript">
+	$('#createTask').click(function(){
+	    $.post('@{createTask()}', {title: prompt('Nombre de Usuario ?')}, function(task){
+	        $('ul').prepend(
+	     		  '<li><input type="checkbox" id="'+task.id+'"/>'+task.userName+'</li>' 
+	        )
+	    }, 'json')
+	})
+	
+	$('input').live('click', function(){
+	    $.post('@{changeStatus()}', {id: $(this).attr('id'), done: $(this).val})
+	})
+</script>
