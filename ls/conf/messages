@@ -1,3 +1,19 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+AclPermissions=Permisos
+Permissions=Permisos
+Delete=Borrar
+Add=Agregar
+Edit=Editar
+Modules=Módulos
+Roles=Perfiles
+AclRoles=Perfiles
+AclUsers=Usuarios
+aclRolesId=Perfil
+userName=Usuario
+password=Contraseña
+firstNames=Nombres
+lastNames=Apellidos
+approved=Activo
+Save=Guardar
