@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE component PUBLIC "//COMPONENTS/" "components.dtd">
+<component name="Recurso" type="table_dojo" target="recursos" search="false" list="true" edit="true" add="true" delete="true">
+    <element name="ID" target="id" type="id_box" visible="true" edit="false" add="false"/>
+    <element name="Categor&amp;iacute;a" target="categoria_id" type="dojo_filtering_select" table="categoria" field="categoria" table_method="get_categorias"  visible="true" edit="true" add="true"/>    
+    <element name="C&amp;oacute;digo" target="codigo" reg_exp="[\d]+" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+    <element name="Nombre" target="nombre" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+    <element name="Descripci&amp;oacute;n" target="descripcion" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>    
+    <element name="Posici&amp;oacute;n" target="posicion" reg_exp="[\d]+" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>    
+    <element name="Estado" target="estado" reg_exp="[\d]+" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+    <element name="" target="" type="element" default="Items" link="components?p=items&amp;recursos_id={id}" visible="true" edit="false" add="false"/>
+    <element name="" target="" type="element" default="Variables" link="components?p=variables&amp;recursos_id={id}" visible="true" edit="false" add="false"/>       
+</component>

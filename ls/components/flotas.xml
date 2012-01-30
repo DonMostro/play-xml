@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE component PUBLIC "//COMPONENTS/" "components.dtd">
+<component name="Posición" type="table_dojo" target="posicion" search_display="table" search_table="items"  search_table_field="codigo" search_table_target="id" list="true" edit="true" add="true" delete="true">
+    <element name="ID" target="id" type="id_box" visible="true" edit="true" add="false"/>
+    <element name="Item" target="items_id"   type="dojo_filtering_select" table="items"  table_field="codigo" default="Ninguna" value="0" visible="true" edit="true" add="true"/>
+    <element name="Fecha" target="stamp" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>    
+    <element name="X" target="x" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+    <element name="Y" target="y" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+</component>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE component PUBLIC "//COMPONENTS/" "components.dtd">
+<component name="Variable" type="table_dojo" target="variables" search="false" list="true" edit="false" add="true" delete="true">
+    <element name="ID" target="id" type="id_box" visible="true" edit="true" add="false"/>
+    <element name="Recurso" target="recursos_id"  type="dojo_filtering_select" table="recursos" field="recurso" table_field="nombre" default="Ninguna" value="0" visible="true" edit="true" add="true"/>    
+    <element name="Tipo" target="tipo" type="dojo_validation_textbox" visible="true" edit="false" add="true"/>
+    <element name="Nombre" target="nombre" type="dojo_validation_textbox" visible="true" edit="false" add="true"/>
+    <element name="Descripci&amp;oacute;n" target="descripcion" type="dojo_validation_textbox" visible="true" edit="false" add="true"/>    
+</component>

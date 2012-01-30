@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE component PUBLIC "//COMPONENTS/" "components.dtd">
+<component name="Items" type="table_dojo" target="items" search="false" list="true" edit="true" add="true" delete="true">
+    <element name="ID" target="id" type="id_box" visible="true" edit="false" add="false"/>
+    <element name="Recurso" target="recursos_id" type="dojo_filtering_select" table="recursos" field="recurso" table_field="nombre" visible="true" edit="true" add="true" />    
+    <element name="Codigo" target="codigo" reg_exp="[\d]+" invalid_message="Solo números" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>
+</component>
