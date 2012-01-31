@@ -30,9 +30,9 @@ public class AclModules extends Model
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules(String title)
+	public AclModules()
 	{
-		this.title = title;
+
 	}
 
 	/**

@@ -92,4 +92,10 @@ public class AclPermissions extends Model implements Serializable
 	{
 		this.permission = permission;
 	}
+	
+	public String toString()
+	{
+		return this.permission;
+	}
+	
 }

@@ -4,7 +4,13 @@ import play.*;
 import play.db.jpa.*;
 import play.data.validation.*;
 import javax.persistence.*;
+import controllers.CRUD.*;
+
+import org.hibernate.annotations.SQLUpdate;
+import org.hsqldb.lib.MD5;
+
 import java.util.*;
+import java.security.*;
 
 @Entity
 @Table(name="acl_users")
@@ -19,6 +25,7 @@ public class AclUsers extends Model
 	public String userName;
 
 	@Column(name="password")
+	@Password
 	public String password;
 
 	@Column(name="first_names")
@@ -27,6 +34,7 @@ public class AclUsers extends Model
 	@Column(name="last_names")
 	public String lastNames;
 
+	@Email
 	public String email;
 
 	public Boolean approved;
@@ -73,10 +81,6 @@ public class AclUsers extends Model
 		return userName;
 	}
 	
-	public String toString() {
-		return userName;
-	}
-
 	/**
 	 * Method 'setUserName'
 	 * 
@@ -102,9 +106,11 @@ public class AclUsers extends Model
 	 * Method 'setPassword'
 	 * 
 	 * @param password
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public void setPassword(String password)
+	public void setPassword(String password) throws NoSuchAlgorithmException
 	{
+		MessageDigest md = MessageDigest.getInstance("MD5");
 		this.password = password;
 	}
 
@@ -192,4 +198,14 @@ public class AclUsers extends Model
 		this.approved = approved;
 	}
 
+	/**
+	 * Method 'toString'
+	 * 
+	 * @return String
+	 */
+	public String toString() 
+	{
+		return userName;
+	}	
+	
 }
