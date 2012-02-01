@@ -19,16 +19,19 @@ public class Controller
 	protected String page;
 	protected String name;
 	protected String target;
+	protected NodeList elements;
+	protected String baseUrl;
 	
 	public Controller (String page, String[] id) 
 	{
 		this.page = page;
 		this.id = id;
+		this.baseUrl = (String) Play.configuration.get("application.baseUrl");
 	}
 	
     protected void initLayout() throws ParserConfigurationException, SAXException, IOException
     {
-    	String pathComponents = (String) Play.configuration.get("path.components");
+    	String pathComponents = (String) Play.configuration.get("application.pathComponents");
         Xml xml = new Xml(new File(pathComponents + "/" + this.page + ".xml"));
         xml.parse();
         this.component = xml.getComponent(); 

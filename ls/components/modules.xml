@@ -1,6 +1,6 @@
 <?xml version="1.0"?> 
 <!DOCTYPE component PUBLIC "//COMPONENTS/" "components.dtd">
-<component name="Modul&amp;oacute;s" type="table_dojo" target="acl_modules" list="true" edit="true" add="true" delete="true">
+<component name="M&amp;oacute;dulos" type="table_dojo" target="acl_modules" list="true" edit="true" add="true" delete="true">
    	<element name="ID" target="id" type="id_box" visible="true" edit="false" add="false"/>
     <element name="M&amp;oacute;dulo" target="title" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>   	
     <element name="Componente XML" target="module" type="dojo_validation_textbox" visible="true" edit="true" add="true"/>

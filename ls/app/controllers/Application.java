@@ -6,6 +6,7 @@ import zwei.admin.ClassInvoker;
 import zwei.admin.Xml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -45,21 +46,28 @@ public class Application extends Controller
 	
 	public static void components(String p) throws ParserConfigurationException, SAXException, IOException, SecurityException, ClassNotFoundException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException
 	{
-		String pathComponents = (String) Play.configuration.get("path.components");
+		String pathComponents = (String) Play.configuration.get("application.pathComponents");
+		System.out.println(pathComponents);
+		String content;
 		
 		File file = new File(pathComponents + "/" + p + ".xml");
+
 		Xml xml = new Xml(file);
 		xml.parse();
 		Element component = xml.getComponent();
 		
-		String componentType = "zwei.admin.components." + zwei.utils.String.toClassName(component.getAttribute("type"));
-		Class[] componentParams = new Class[] { String.class, String[].class };
-		ClassInvoker componentClass = new ClassInvoker(componentType, componentParams);
+		String componentClassName = "zwei.admin.components." + zwei.utils.String.toClassName(component.getAttribute("type"));
+		Class[] componentParamsTypes = new Class[] { String.class, String[].class };
+		Object[] componentParams = new Object [] {p, null };
+		ClassInvoker componentClass = new ClassInvoker(componentClassName, componentParamsTypes);
 		
-		Object[] arguments = new Object[] { p, null };
-		componentClass.initMethod("display", (Class[]) arguments);
+		componentClass.initMethod("display");
 		
-		String content = (String) componentClass.getResult();
+		Map<String, String[]> pars = params.all();
+		System.out.println(pars.get("p").toString());
+		
+		content = (String) componentClass.getResult(componentParams);
+
 		render(content);
 	}
 	
