@@ -20,7 +20,9 @@ public class Controller
 	protected String name;
 	protected String target;
 	protected NodeList elements;
+	protected NodeList tabs;
 	protected String baseUrl;
+	protected Xml xml;
 	
 	public Controller (String page, String[] id) 
 	{
@@ -34,8 +36,11 @@ public class Controller
     	String pathComponents = (String) Play.configuration.get("application.pathComponents");
         Xml xml = new Xml(new File(pathComponents + "/" + this.page + ".xml"));
         xml.parse();
-        this.component = xml.getComponent(); 
+        this.xml = xml;
+        this.component = this.xml.getComponent(); 
         this.name = component.getAttribute("name");
         this.target = component.getAttribute("target");
+        this.elements = this.xml.getElements();
+        this.tabs = this.xml.getTabs();
     }	
 }

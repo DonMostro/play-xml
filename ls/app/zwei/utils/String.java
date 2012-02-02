@@ -24,7 +24,6 @@ public class String {
 
 		for (java.lang.String s : aString ) {
 			returns += toProperCase(s);
-			System.out.println(returns);
 		}
 
 		return returns;		

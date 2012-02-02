@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 import java.util.*;
 
-@Entity
+@javax.persistence.Entity
 @Table(name="acl_modules")
 public class AclModules extends Model
 {
@@ -32,7 +32,6 @@ public class AclModules extends Model
 	 */
 	public AclModules()
 	{
-
 	}
 
 	/**

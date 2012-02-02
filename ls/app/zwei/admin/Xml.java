@@ -35,7 +35,6 @@ public class Xml
 		this.component = doc.getDocumentElement();
 		this.elements = doc.getElementsByTagName("element");
 		this.tabs = doc.getElementsByTagName("tab");
-		System.out.println("Information of all elements");
 	}
 	
 	public NodeList getElements()

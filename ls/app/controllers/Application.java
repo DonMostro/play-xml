@@ -44,29 +44,86 @@ public class Application extends Controller
 		renderJSON(task);
 	}
 	
-	public static void components(String p) throws ParserConfigurationException, SAXException, IOException, SecurityException, ClassNotFoundException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException
+	public static void components(String p)
 	{
+		Map<String, String> httpParams = params.allSimple();//Request params
 		String pathComponents = (String) Play.configuration.get("application.pathComponents");
-		System.out.println(pathComponents);
-		String content;
+		String content = "";
+		ClassInvoker componentClass = null;
 		
 		File file = new File(pathComponents + "/" + p + ".xml");
-
 		Xml xml = new Xml(file);
-		xml.parse();
+		
+		try {
+			xml.parse();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+			content = "<p>No se encuentra archivo <i>" + pathComponents + "/" + p + ".xml</i></p>";
+			render(content);
+		}
+		
 		Element component = xml.getComponent();
+		String className = "";
+		String methodName = "";
 		
-		String componentClassName = "zwei.admin.components." + zwei.utils.String.toClassName(component.getAttribute("type"));
-		Class[] componentParamsTypes = new Class[] { String.class, String[].class };
-		Object[] componentParams = new Object [] {p, null };
-		ClassInvoker componentClass = new ClassInvoker(componentClassName, componentParamsTypes);
+		try {
+			className = "zwei.admin.components." + zwei.utils.String.toClassName(component.getAttribute("type"));//Nombre clase
+			methodName = "display";//Nombre método
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			content = "<p>Componente <i>" + pathComponents + "/" + p + ".xml</i> no tiene atributo <i>type</i></p>";
+			render(content);
+		}	
 		
-		componentClass.initMethod("display");
+		Class[] componentParamsTypes = new Class[] { String.class, String[].class };//Clases de parámetros del constructor
+		Object[] componentParams = new Object [] { p, null };//Valores parámetros del constructor
+		Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
+		Object[] methodArgs = new Object [] { httpParams };//Valores argumentos de método
 		
-		Map<String, String[]> pars = params.all();
-		System.out.println(pars.get("p").toString());
+		try {
+			componentClass = new ClassInvoker(className, componentParamsTypes);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//se asocian parámetros a clase
 		
-		content = (String) componentClass.getResult(componentParams);
+		try {
+			componentClass.initMethod(methodName, methodArgsTypes);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//se construye clase y prepara método
+		
+		try {
+			content = (String) componentClass.getResult(componentParams, methodArgs);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//se obtiene resultado del método
 
 		render(content);
 	}
