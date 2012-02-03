@@ -205,9 +205,10 @@ public class AclModules extends Model
 	public List<AclModules> getChildrens(int parentId)
 	{
 		List<AclModules> childrens = listGrantedResourcesByParentId(parentId);
+
 		if (parentId != 0) {
 			for (AclModules child : childrens) {
-				System.out.println(child);
+				
 			}
 		}
 		return childrens;
@@ -227,14 +228,17 @@ public class AclModules extends Model
 	}
 
 
-	public List<String> getTreeStruct(int parentId)
+	public List<AclModules> getTreeStruct(int parentId)
 	{
 		List<AclModules> root = getChildrens(parentId);
 		ArrayList nodes = new ArrayList();
 		int i = 0;
-		
+		int key;
 		for (AclModules branch : root) {
-			System.out.println(branch);
+			if (branch.getTree().equals("1")) {
+				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : 0);
+				nodes.add(key, branch.getId());
+			}
 		}
 		
 		
