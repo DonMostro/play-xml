@@ -13,9 +13,11 @@ import play.db.jpa.Model;
 public class AclPermissions extends Model implements Serializable
 {
 	@JoinColumn(name="acl_roles_id")
+	@JoinTable(name="AclRoles")
 	public AclRoles aclRolesId;
 
 	@JoinColumn(name="acl_modules_id")
+	@JoinTable(name="AclModules")
 	public AclModules aclModulesId;
 
 	@JoinColumn(name="permission")

@@ -23,7 +23,7 @@ import models.*;
 
 public class Application extends Controller 
 {
-    public static void index() 
+    public static void test() 
     {
     	new AclModules();
     	List tasks = Task.findAll();
@@ -73,7 +73,7 @@ public class Application extends Controller
 		String methodName = "";
 		
 		try {
-			className = "zwei.admin.components." + zwei.utils.String.toClassName(component.getAttribute("type"));//Nombre clase
+			className = "zwei.admin.components." + zwei.utils.StringU.toClassName(component.getAttribute("type"));//Nombre clase
 			methodName = "display";//Nombre método
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -130,6 +130,8 @@ public class Application extends Controller
 	
 	public static void modules()
 	{
-		
+		AclModules aclModules = new AclModules();
+		List<AclModules> content = aclModules.listGrantedResourcesByParentId(0);
+		renderJSON(content);
 	}
 }

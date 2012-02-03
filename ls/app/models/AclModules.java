@@ -3,6 +3,9 @@ package models;
 import play.*;
 import play.db.jpa.*;
 import play.data.validation.*;
+import play.exceptions.JavaExecutionException;
+import zwei.utils.HqlToSqlTranslator;
+
 import javax.persistence.*;
 
 import java.util.*;
@@ -165,4 +168,101 @@ public class AclModules extends Model
 		return title;
 	}
 
+	public List<AclModules> listGrantedResourcesByParentId(int parentId)
+	{
+		Query query = null;
+
+			query = this.em().createQuery (
+				    "select mod from AclModules as mod " +
+					"where mod.parentId = " + parentId
+			);
+
+
+		return query.getResultList();
+		/* 
+		$select=$this->_db->select()
+		->from($this->_tb_modules, array('id','parent_id','module','title','linkable','tree'))
+		->from($this->_tb_permissions, array())
+		->from($this->_tb_roles, array())
+		->from($this->_tb_users, array())
+		->where($this->_tb_modules."_id = $this->_tb_modules.id")
+		->where($this->_tb_permissions.".{$this->_tb_roles}_id = $this->_tb_roles.id")
+		->where($this->_tb_users.".acl_roles_id = $this->_tb_permissions.{$this->_tb_roles}_id")
+		->where('parent_id ='.(int)$parent_id)
+		->where($this->_tb_users.'.user_name = "' . $this->_user . '"')
+		->where($this->_tb_modules.'.tree = ?', '1') //[TODO] externalizar la condicion tree segun el caso
+
+		->group($this->_tb_modules.'.id')
+		;
+
+		//Zwei_Utils_Debug::write($select->__toString());
+		return($this->_db->fetchAll($select));
+		*/
+	}
+	
+	
+	
+	public List<AclModules> getChildrens(int parentId)
+	{
+		List<AclModules> childrens = listGrantedResourcesByParentId(parentId);
+		if (parentId != 0) {
+			for (AclModules child : childrens) {
+				System.out.println(child);
+			}
+		}
+		return childrens;
+		
+		/*
+		$childrens = $this->_acl->listGrantedResourcesByParentId($parent_id);
+		if ($parent_id != 0){
+			foreach ($childrens as $i => $child){
+				$childrens[$i]['label'] = utf8_encode(html_entity_decode($child['title']));
+				unset($childrens[$i]['title']);
+				$childrens[$i]['url'] = "index/components?p=".utf8_encode(html_entity_decode($child['module']));
+				unset($childrens[$i]['module']);
+			}
+		}
+		return $childrens;
+		*/
+	}
+
+
+	public List<String> getTreeStruct(int parentId)
+	{
+		List<AclModules> root = getChildrens(parentId);
+		ArrayList nodes = new ArrayList();
+		int i = 0;
+		
+		for (AclModules branch : root) {
+			System.out.println(branch);
+		}
+		
+		
+		return nodes;
+		/*
+		$root = $this->getChildrens($parent_id);
+
+		$arrNodes = array();
+	  
+		$i = 0;
+		foreach($root as $branch)
+		{
+			if($branch['tree'] == '1'){
+				$key = ($branch['parent_id'] == '0') ? $branch['id'] : $i;
+				$arrNodes[$key]['id']  = $branch['id'];
+				$arrNodes[$key]['label'] = utf8_encode(html_entity_decode($branch['title']));
+				if ($branch['linkable'] == '1') {
+					$arrNodes[$key]['url'] = "index/components?p=".$branch['module'];
+				}
+				if ($this->getChildrens($branch['id'])) {
+					$arrNodes[$key]['children'] = $this->getChildrens($branch['id']);
+					$i++;
+				}
+			}
+		}
+		return $arrNodes;
+		*/
+	}	
+	
+	
 }
