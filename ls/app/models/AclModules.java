@@ -169,16 +169,17 @@ public class AclModules extends Model
 	}
 
 	public List<AclModules> listGrantedResourcesByParentId(int parentId)
-	{
+	{	
+		List<AclModules> returns = null;
 		Query query = null;
+		
+		query = this.em().createQuery (
+			    "select mod from AclModules as mod " +
+				"where mod.parentId = " + parentId
+		);
 
-			query = this.em().createQuery (
-				    "select mod from AclModules as mod " +
-					"where mod.parentId = " + parentId
-			);
-
-
-		return query.getResultList();
+		returns = query.getResultList();	
+		return returns;
 		/* 
 		$select=$this->_db->select()
 		->from($this->_tb_modules, array('id','parent_id','module','title','linkable','tree'))
@@ -228,21 +229,34 @@ public class AclModules extends Model
 	}
 
 
-	public List<AclModules> getTreeStruct(int parentId)
+	public List getTreeStruct(int parentId)
 	{
 		List<AclModules> root = getChildrens(parentId);
-		ArrayList nodes = new ArrayList();
+		HashMap nodes = new HashMap(); 
+		
 		int i = 0;
-		int key;
+		int key = 0;
 		for (AclModules branch : root) {
+			
 			if (branch.getTree().equals("1")) {
 				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : 0);
-				nodes.add(key, branch.getId());
 			}
+			
+			nodes.put(key, new HashMap().put("id", branch.getId()));
+			nodes.put(key, new HashMap().put("label", branch.getTitle()));
+			
+			if (branch.getLinkable().equals("1")) {
+				nodes.put(key, new HashMap().put("url", "index/components?p=" + branch.getModule()));
+			}
+			
+			if (getChildrens(key) != null) {
+				nodes.put(key, new HashMap().put("childrens", getChildrens(key)));
+			}
+			
 		}
-		
-		
-		return nodes;
+
+	    
+		return (List) nodes;
 		/*
 		$root = $this->getChildrens($parent_id);
 
