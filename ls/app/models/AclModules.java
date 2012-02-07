@@ -212,6 +212,7 @@ public class AclModules extends Model
 				
 			}
 		}
+		
 		return childrens;
 		
 		/*
@@ -229,34 +230,44 @@ public class AclModules extends Model
 	}
 
 
-	public List getTreeStruct(int parentId)
+	public HashMap getTreeStruct(int parentId)
 	{
 		List<AclModules> root = getChildrens(parentId);
-		HashMap nodes = new HashMap(); 
+		HashMap<Integer, HashMap> nodes = new HashMap(); 
+		HashMap subnodes = new HashMap();
+		
+		//List<List<String>> nodes = new ArrayList<List<String>>();
 		
 		int i = 0;
 		int key = 0;
 		for (AclModules branch : root) {
 			
 			if (branch.getTree().equals("1")) {
-				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : 0);
+				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : i);
 			}
-			
-			nodes.put(key, new HashMap().put("id", branch.getId()));
-			nodes.put(key, new HashMap().put("label", branch.getTitle()));
+			subnodes = new HashMap();
+			subnodes.put("id", branch.getId());
+			subnodes.put("label", branch.getTitle());
 			
 			if (branch.getLinkable().equals("1")) {
-				nodes.put(key, new HashMap().put("url", "index/components?p=" + branch.getModule()));
+				subnodes.put("url", "index/components?p=" + branch.getModule());
 			}
 			
 			if (getChildrens(key) != null) {
-				nodes.put(key, new HashMap().put("childrens", getChildrens(key)));
+				subnodes.put("childrens", getChildrens(key));
+				i++;
 			}
-			
+			nodes.put(key, subnodes);
 		}
-
+	
+		Iterator it = nodes.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry e = (Map.Entry) it.next();
+			System.out.println(e.getKey() + " " + e.getValue());
+		}
+		
 	    
-		return (List) nodes;
+		return nodes;
 		/*
 		$root = $this->getChildrens($parent_id);
 

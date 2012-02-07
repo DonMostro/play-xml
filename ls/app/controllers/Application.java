@@ -131,7 +131,7 @@ public class Application extends Controller
 	public static void modules()
 	{
 		AclModules aclModules = new AclModules();
-		List content = aclModules.getTreeStruct(0);
+		HashMap content = aclModules.getTreeStruct(0);
 	
 		renderJSON(content);
 	}
