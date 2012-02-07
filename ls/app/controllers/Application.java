@@ -23,30 +23,24 @@ import models.*;
 
 public class Application extends Controller 
 {
-    public static void test() 
-    {
-    	new AclModules();
-    	List tasks = Task.findAll();
-        render(tasks);
-    }
-    
-    public static void changeStatus(Long id, Boolean done) 
-    {
-    	Task task = Task.findById(id);
-    	task.done = done;
-    	task.save();
-    	renderJSON(task);
-    }
-    
-	public static void createTask(String title) 
+	private String dojoStyle = "tundra";
+	private String sitename;
+	private String template = "";	
+	
+
+	
+	public static void index(String style, String template)
 	{
-		Task task = new Task(title).save();
-		renderJSON(task);
+		String baseUrl = Play.configuration.getProperty("application.baseUrl");
+		String baseDojoFolder = "/dojotoolkit";
+		
+		render(baseUrl, template, style);
 	}
+	
 	
 	public static void components(String p)
 	{
-		Map<String, String> httpParams = params.allSimple();//Request params
+		Map<String, String> httpParams = params.allSimple();//All request params
 		String pathComponents = (String) Play.configuration.get("application.pathComponents");
 		String content = "";
 		ClassInvoker componentClass = null;
@@ -135,4 +129,28 @@ public class Application extends Controller
 	
 		renderJSON(content);
 	}
+	
+	
+    public static void test() 
+    {
+    	new AclModules();
+    	List tasks = Task.findAll();
+        render(tasks);
+    }
+    
+    public static void changeStatus(Long id, Boolean done) 
+    {
+    	Task task = Task.findById(id);
+    	task.done = done;
+    	task.save();
+    	renderJSON(task);
+    }
+    
+	public static void createTask(String title) 
+	{
+		Task task = new Task(title).save();
+		renderJSON(task);
+	}
+	
+	
 }

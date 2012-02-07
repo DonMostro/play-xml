@@ -163,8 +163,8 @@ public class AclModules extends Model
 		this.approved = approved;
 	}
 	
-	
-	public String toString() {
+	public String toString() 
+	{
 		return title;
 	}
 
@@ -177,8 +177,10 @@ public class AclModules extends Model
 			    "select mod from AclModules as mod " +
 				"where mod.parentId = " + parentId
 		);
-
-		returns = query.getResultList();	
+		
+		if (query.getResultList().size() > 0) {
+			returns = query.getResultList();	
+		}
 		return returns;
 		/* 
 		$select=$this->_db->select()
@@ -214,19 +216,6 @@ public class AclModules extends Model
 		}
 		
 		return childrens;
-		
-		/*
-		$childrens = $this->_acl->listGrantedResourcesByParentId($parent_id);
-		if ($parent_id != 0){
-			foreach ($childrens as $i => $child){
-				$childrens[$i]['label'] = utf8_encode(html_entity_decode($child['title']));
-				unset($childrens[$i]['title']);
-				$childrens[$i]['url'] = "index/components?p=".utf8_encode(html_entity_decode($child['module']));
-				unset($childrens[$i]['module']);
-			}
-		}
-		return $childrens;
-		*/
 	}
 
 
@@ -245,6 +234,7 @@ public class AclModules extends Model
 			if (branch.getTree().equals("1")) {
 				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : i);
 			}
+			
 			subnodes = new HashMap();
 			subnodes.put("id", branch.getId());
 			subnodes.put("label", branch.getTitle());
@@ -259,13 +249,14 @@ public class AclModules extends Model
 			}
 			nodes.put(key, subnodes);
 		}
-	
+		/*
 		Iterator it = nodes.entrySet().iterator();
+		
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
 			System.out.println(e.getKey() + " " + e.getValue());
 		}
-		
+		*/
 	    
 		return nodes;
 		/*
