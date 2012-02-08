@@ -17,13 +17,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import dojo.Json;
+
 import models.*;
 
 
 
 public class Application extends Controller 
 {
-	private String dojoStyle = "tundra";
+	private String style = "tundra";
 	private String sitename;
 	private String template = "";	
 	
@@ -33,6 +35,7 @@ public class Application extends Controller
 	{
 		String baseUrl = Play.configuration.getProperty("application.baseUrl");
 		String baseDojoFolder = "/dojotoolkit";
+		style = style != null ? style : "tundra"; 
 		
 		render(baseUrl, template, style);
 	}
@@ -125,8 +128,8 @@ public class Application extends Controller
 	public static void modules()
 	{
 		AclModules aclModules = new AclModules();
-		HashMap content = aclModules.getTreeStruct(0);
-	
+		HashMap tree = aclModules.getTreeStruct(0);
+		HashMap content = Json.toDataStore(tree); 
 		renderJSON(content);
 	}
 	
