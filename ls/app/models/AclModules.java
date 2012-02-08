@@ -173,9 +173,14 @@ public class AclModules extends Model
 		List<AclModules> returns = null;
 		Query query = null;
 		
-		query = this.em().createQuery (
-			    "select mod from AclModules as mod " +
-				"where mod.parentId = " + parentId
+		query = this.em().createQuery(
+			    "from AclModules as mod " +
+				"where mod.parentId = " + parentId +
+				"and mod.tree = '1' " +
+			    //"select * from acl_modules " +
+				//"where parent_id = " + parentId +				
+				
+				" "
 		);
 		
 		if (query.getResultList().size() > 0) {
@@ -232,7 +237,7 @@ public class AclModules extends Model
 		for (AclModules branch : root) {
 			
 			if (branch.getTree().equals("1")) {
-				key = (int) ((branch.getParentId().toString().equals("0")) ? branch.getId() : i);
+				key = (int) ((branch.parentId.id == 0) ? branch.getId() : i);
 			}
 			
 			subnodes = new HashMap();
@@ -249,40 +254,7 @@ public class AclModules extends Model
 			}
 			nodes.put(key, subnodes);
 		}
-		/*
-		Iterator it = nodes.entrySet().iterator();
-		
-		while (it.hasNext()) {
-			Map.Entry e = (Map.Entry) it.next();
-			System.out.println(e.getKey() + " " + e.getValue());
-		}
-		*/
 	    
 		return nodes;
-		/*
-		$root = $this->getChildrens($parent_id);
-
-		$arrNodes = array();
-	  
-		$i = 0;
-		foreach($root as $branch)
-		{
-			if($branch['tree'] == '1'){
-				$key = ($branch['parent_id'] == '0') ? $branch['id'] : $i;
-				$arrNodes[$key]['id']  = $branch['id'];
-				$arrNodes[$key]['label'] = utf8_encode(html_entity_decode($branch['title']));
-				if ($branch['linkable'] == '1') {
-					$arrNodes[$key]['url'] = "index/components?p=".$branch['module'];
-				}
-				if ($this->getChildrens($branch['id'])) {
-					$arrNodes[$key]['children'] = $this->getChildrens($branch['id']);
-					$i++;
-				}
-			}
-		}
-		return $arrNodes;
-		*/
 	}	
-	
-	
 }
