@@ -19,15 +19,21 @@ public class AclModules extends Model
     @JoinColumn(name="parent_id")
 	public AclModules parentId;
 
+    @Column(name="title")
     public String title;
 
+    @Column(name="module")
     public String module;
 
+    @Column(name="tree")
     public String tree;
 
+    @Column(name="linkable")
     public String linkable;
 
+    @Column(name="approved")
     public String approved;
+    
 
 	/**
 	 * Method 'AclModules'
@@ -173,14 +179,23 @@ public class AclModules extends Model
 		List<AclModules> returns = null;
 		Query query = null;
 		
-		query = this.em().createQuery(
-			    "from AclModules as mod " +
-				"where mod.parentId = " + parentId +
-				"and mod.tree = '1' " +
-			    //"select * from acl_modules " +
-				//"where parent_id = " + parentId +				
-				
-				" "
+		query = this.em().createNativeQuery(
+			    "SELECT acl_modules.id, acl_modules.parent_id, acl_modules.title, " +
+			    "acl_modules.module, acl_modules.tree, acl_modules.approved, acl_modules.linkable " +
+			    "FROM acl_modules " +
+			    "JOIN acl_permissions " +
+			    "ON acl_modules.id = acl_permissions.acl_modules_id " +
+			    "JOIN acl_roles " +
+			    "ON acl_roles.id = acl_permissions.acl_roles_id " +
+			    "JOIN acl_users " +
+			    "ON acl_roles.id = acl_users.acl_roles_id " +
+			    "WHERE acl_modules.tree = '1' " +
+			    "AND parent_id = " + parentId + " "
+			    //"AND acl_users.user_name = " + this.user + " " +			    
+			    
+			    //"select mod from aclModules " +
+				//"where parentId = " + parentId +				
+				, AclModules.class
 		);
 		
 		if (query.getResultList().size() > 0) {
@@ -210,23 +225,28 @@ public class AclModules extends Model
 	
 	
 	
-	public List<AclModules> getChildrens(int parentId)
+	public HashMap getChildrens(int parentId)
 	{
 		List<AclModules> childrens = listGrantedResourcesByParentId(parentId);
-
+		HashMap returns = null;
+		
 		if (parentId != 0) {
 			for (AclModules child : childrens) {
-				
+				returns.put("label", child.getTitle());
+				returns.put("module", child.getModule());
+				returns.put("tree", child.getTree());
+				returns.put("id", child.getId());
+				returns.put("linkable", child.getLinkable());
 			}
 		}
 		
-		return childrens;
+		return returns;
 	}
 
 
 	public HashMap getTreeStruct(int parentId)
 	{
-		List<AclModules> root = getChildrens(parentId);
+		HashMap<String, String> root = getChildrens(parentId);
 		HashMap<Integer, HashMap> nodes = new HashMap(); 
 		HashMap subnodes = new HashMap();
 		
@@ -234,7 +254,15 @@ public class AclModules extends Model
 		
 		int i = 0;
 		int key = 0;
-		for (AclModules branch : root) {
+		
+		Iterator it = root.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry e = (Map.Entry) it.next();
+			subnodes.put(e.getKey(), e.getValue());
+		}
+		nodes.put(key, subnodes);
+		/*
+		for (AclModules branch : root.values()) {
 			
 			if (branch.getTree().equals("1")) {
 				key = (int) ((branch.parentId.id == 0) ? branch.getId() : i);
@@ -249,12 +277,12 @@ public class AclModules extends Model
 			}
 			
 			if (getChildrens(key) != null) {
-				subnodes.put("childrens", getChildrens(key));
+				subnodes.put("children", getChildrens(key));
 				i++;
 			}
 			nodes.put(key, subnodes);
 		}
-	    
+	    */
 		return nodes;
 	}	
 }

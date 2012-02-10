@@ -4,6 +4,7 @@ import play.*;
 import play.mvc.*;
 import zwei.admin.ClassInvoker;
 import zwei.admin.Xml;
+import zwei.dojo.Json;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +18,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import dojo.Json;
 
 import models.*;
 
