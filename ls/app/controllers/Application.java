@@ -91,6 +91,8 @@ public class Application extends Controller
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			content = "<p>No se encuentra <i>" + className + ".xml</i></p>";
+			render(content);
 		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -174,7 +174,7 @@ public class AclModules extends Model
 		return title;
 	}
 
-	public List<AclModules> listGrantedResourcesByParentId(int parentId)
+	public List<AclModules> listGrantedResourcesByParentId(long parentId)
 	{	
 		List<AclModules> returns = null;
 		Query query = null;
@@ -190,99 +190,77 @@ public class AclModules extends Model
 			    "JOIN acl_users " +
 			    "ON acl_roles.id = acl_users.acl_roles_id " +
 			    "WHERE acl_modules.tree = '1' " +
-			    "AND parent_id = " + parentId + " "
+			    "AND parent_id = " + parentId + " " +
+			    "GROUP BY acl_modules.id "
 			    //"AND acl_users.user_name = " + this.user + " " +			    
 			    
 			    //"select mod from aclModules " +
-				//"where parentId = " + parentId +				
+				//"where parentId = " + parentId + //Query JPA				
 				, AclModules.class
 		);
-		
+
 		if (query.getResultList().size() > 0) {
 			returns = query.getResultList();	
 		}
 		return returns;
-		/* 
-		$select=$this->_db->select()
-		->from($this->_tb_modules, array('id','parent_id','module','title','linkable','tree'))
-		->from($this->_tb_permissions, array())
-		->from($this->_tb_roles, array())
-		->from($this->_tb_users, array())
-		->where($this->_tb_modules."_id = $this->_tb_modules.id")
-		->where($this->_tb_permissions.".{$this->_tb_roles}_id = $this->_tb_roles.id")
-		->where($this->_tb_users.".acl_roles_id = $this->_tb_permissions.{$this->_tb_roles}_id")
-		->where('parent_id ='.(int)$parent_id)
-		->where($this->_tb_users.'.user_name = "' . $this->_user . '"')
-		->where($this->_tb_modules.'.tree = ?', '1') //[TODO] externalizar la condicion tree segun el caso
-
-		->group($this->_tb_modules.'.id')
-		;
-
-		//Zwei_Utils_Debug::write($select->__toString());
-		return($this->_db->fetchAll($select));
-		*/
 	}
 	
 	
 	
-	public HashMap getChildrens(int parentId)
+	public List<AclModules> getChildrens(long parentId)
 	{
 		List<AclModules> childrens = listGrantedResourcesByParentId(parentId);
-		HashMap returns = null;
-		
-		if (parentId != 0) {
-			for (AclModules child : childrens) {
-				returns.put("label", child.getTitle());
-				returns.put("module", child.getModule());
-				returns.put("tree", child.getTree());
-				returns.put("id", child.getId());
-				returns.put("linkable", child.getLinkable());
-			}
-		}
-		
-		return returns;
+		return childrens;
 	}
 
 
 	public HashMap getTreeStruct(int parentId)
 	{
-		HashMap<String, String> root = getChildrens(parentId);
-		HashMap<Integer, HashMap> nodes = new HashMap(); 
+		List<AclModules>  root = getChildrens(parentId);
+		HashMap<Long, HashMap> nodes = new HashMap(); 
 		HashMap subnodes = new HashMap();
-		
-		//List<List<String>> nodes = new ArrayList<List<String>>();
+		HashMap subnodes2;
 		
 		int i = 0;
-		int key = 0;
+		long key = 0;
 		
-		Iterator it = root.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry e = (Map.Entry) it.next();
-			subnodes.put(e.getKey(), e.getValue());
-		}
-		nodes.put(key, subnodes);
-		/*
-		for (AclModules branch : root.values()) {
+		for (AclModules branch : root) {
 			
 			if (branch.getTree().equals("1")) {
-				key = (int) ((branch.parentId.id == 0) ? branch.getId() : i);
-			}
-			
-			subnodes = new HashMap();
-			subnodes.put("id", branch.getId());
-			subnodes.put("label", branch.getTitle());
-			
-			if (branch.getLinkable().equals("1")) {
-				subnodes.put("url", "index/components?p=" + branch.getModule());
-			}
-			
-			if (getChildrens(key) != null) {
-				subnodes.put("children", getChildrens(key));
-				i++;
+				key = branch.parentId.id == 0 ?  branch.getId() : i;
+
+				subnodes = new HashMap();
+				subnodes.put("id", branch.getId());
+				subnodes.put("label", branch.getTitle());
+
+				if (branch.getLinkable().equals("1")) {
+					subnodes.put("url", "index/components?p=" + branch.getModule());
+				}
+				
+				if (getChildrens(key) != null) {
+					List<AclModules> root2 = getChildrens(key);
+					subnodes2 = new HashMap();
+					for (AclModules branch2 : root2) {
+						
+						if (branch2.getTree().equals("1")) {
+							subnodes2.put("id", branch2.getId());
+							subnodes2.put("label", branch2.getTitle());
+							
+							System.out.println("linkable: "+branch2.getLinkable());
+							System.out.println("module: "+branch2.getModule());
+							
+							if (branch2.getLinkable().equals("1")) {
+								subnodes2.put("url", "/application/components?p=" + branch2.getModule());
+							}
+							subnodes.put("children", subnodes2);
+						}
+						
+					}
+				}
 			}
 			nodes.put(key, subnodes);
 		}
-	    */
+	    
 		return nodes;
 	}	
 }
