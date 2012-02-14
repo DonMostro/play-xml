@@ -219,7 +219,8 @@ public class AclModules extends Model
 		List<AclModules>  root = getChildrens(parentId);
 		HashMap<Long, HashMap> nodes = new HashMap(); 
 		HashMap subnodes = new HashMap();
-		HashMap subnodes2;
+		HashMap subnodes2 = new HashMap();
+		ArrayList<HashMap> childrens = new ArrayList<HashMap>();
 		
 		int i = 0;
 		long key = 0;
@@ -238,24 +239,27 @@ public class AclModules extends Model
 				}
 				
 				if (getChildrens(key) != null) {
+					childrens = new ArrayList<HashMap>();
 					List<AclModules> root2 = getChildrens(key);
-					subnodes2 = new HashMap();
 					for (AclModules branch2 : root2) {
+						subnodes2 = new HashMap<String, String>();
 						
 						if (branch2.getTree().equals("1")) {
 							subnodes2.put("id", branch2.getId());
 							subnodes2.put("label", branch2.getTitle());
-							
-							System.out.println("linkable: "+branch2.getLinkable());
-							System.out.println("module: "+branch2.getModule());
+						
+							System.out.println("parent_id: " + key);
+							System.out.println("id: " + branch2.getId());
+							System.out.println("module: " + branch2.getModule());
 							
 							if (branch2.getLinkable().equals("1")) {
 								subnodes2.put("url", "/application/components?p=" + branch2.getModule());
 							}
-							subnodes.put("children", subnodes2);
+							childrens.add(subnodes2);
 						}
-						
 					}
+					subnodes.put("children", childrens);
+					//subnodes.put("children", subnodesWrapper);
 				}
 			}
 			nodes.put(key, subnodes);
