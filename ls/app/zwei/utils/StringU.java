@@ -4,7 +4,7 @@
 package zwei.utils;
 
 
-public class String {
+public class StringU {
 
 	/**
 	 * Transforma una variable a un string que sigue las convenciones Java
