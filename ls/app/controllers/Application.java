@@ -78,8 +78,14 @@ public class Application extends Controller
 			render(content);
 		}	
 		
+		/**
+		 * Información de clase
+		 */
 		Class[] componentParamsTypes = new Class[] { String.class, String[].class, Map.class };//Clases de parámetros del constructor
 		Object[] componentParams = new Object [] { p, null, form };//Valores parámetros del constructor
+		/**
+		 * Información de método
+		 */
 		//Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
 		//Object[] methodArgs = new Object [] { form };//Valores argumentos de método
 		
