@@ -6,17 +6,18 @@ import java.util.Map;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 import zwei.admin.ClassInvoker;
+import zwei.utils.StringU;
 
 public class Object 
 {
-	private Map<String, String> httpParams;
+	private Map<String, String> form;
 	ClassInvoker modelClass = null;
 
-	public Object(Map<String, String> httpParams) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, ClassNotFoundException, NoSuchMethodException 
+	public Object(Map<String, String> form) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, ClassNotFoundException, NoSuchMethodException 
 	{
-		this.httpParams = httpParams;
-		String modelName = "models." + zwei.utils.StringU.toClassName(httpParams.get("model"));
-		ClassInvoker modelClass = null;
+		this.form = form;
+		String modelName = "models." + StringU.toClassName(form.get("model"));
+		//ClassInvoker modelClass = null;
 		this.modelClass = new ClassInvoker(modelName);
 	}
 	

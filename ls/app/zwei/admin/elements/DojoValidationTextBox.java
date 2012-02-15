@@ -1,7 +1,54 @@
 package zwei.admin.elements;
 
+import java.util.Map;
+
 public class DojoValidationTextBox extends Element {
 	
+	public DojoValidationTextBox() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit, String name,
+			String target, String value, Map<String, String> params,
+			Map<String, String> form) {
+		super(visible, edit, name, target, value, params, form);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit, String name,
+			String target, String value, Map<String, String> params) {
+		super(visible, edit, name, target, value, params);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit, String name,
+			String target, String value) {
+		super(visible, edit, name, target, value);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit, String name,
+			String target) {
+		super(visible, edit, name, target);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit, String name) {
+		super(visible, edit, name);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible, boolean edit) {
+		super(visible, edit);
+		// TODO Auto-generated constructor stub
+	}
+
+	public DojoValidationTextBox(boolean visible) {
+		super(visible);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Despliegue del elemento en formulario editable 
 	 * @param i

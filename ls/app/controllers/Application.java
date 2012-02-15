@@ -43,7 +43,7 @@ public class Application extends Controller
 	
 	public static void components(String p)
 	{
-		Map<String, String> httpParams = params.allSimple();//All request params
+		Map<String, String> form = params.allSimple();//All request params
 		String pathComponents = (String) Play.configuration.get("application.pathComponents");
 		String content = "";
 		ClassInvoker componentClass = null;
@@ -78,10 +78,10 @@ public class Application extends Controller
 			render(content);
 		}	
 		
-		Class[] componentParamsTypes = new Class[] { String.class, String[].class };//Clases de parámetros del constructor
-		Object[] componentParams = new Object [] { p, null };//Valores parámetros del constructor
-		Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
-		Object[] methodArgs = new Object [] { httpParams };//Valores argumentos de método
+		Class[] componentParamsTypes = new Class[] { String.class, String[].class, Map.class };//Clases de parámetros del constructor
+		Object[] componentParams = new Object [] { p, null, form };//Valores parámetros del constructor
+		//Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
+		//Object[] methodArgs = new Object [] { form };//Valores argumentos de método
 		
 		try {
 			componentClass = new ClassInvoker(className, componentParamsTypes);
@@ -99,7 +99,8 @@ public class Application extends Controller
 		}//se asocian parámetros a clase
 		
 		try {
-			componentClass.initMethod(methodName, methodArgsTypes);
+			//componentClass.initMethod(methodName, methodArgsTypes);
+			componentClass.initMethod(methodName);
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,7 +110,8 @@ public class Application extends Controller
 		}//se construye clase y prepara método
 		
 		try {
-			content = (String) componentClass.getResult(componentParams, methodArgs);
+			//content = (String) componentClass.getResult(componentParams, methodArgs);
+			content = (String) componentClass.getResult(componentParams);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
