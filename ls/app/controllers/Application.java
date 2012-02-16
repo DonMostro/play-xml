@@ -79,12 +79,12 @@ public class Application extends Controller
 		}	
 		
 		/**
-		 * Información de clase
+		 * Información de parametros clase
 		 */
 		Class[] componentParamsTypes = new Class[] { String.class, String[].class, Map.class };//Clases de parámetros del constructor
 		Object[] componentParams = new Object [] { p, null, form };//Valores parámetros del constructor
 		/**
-		 * Información de método
+		 * Información de argumentos método
 		 */
 		//Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
 		//Object[] methodArgs = new Object [] { form };//Valores argumentos de método
@@ -121,12 +121,17 @@ public class Application extends Controller
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			content = "<p>IllegalArgumentException para <i>" + className + "." + methodName + "(), " + e.getMessage() + "</i></p>";
+			render(content);
+
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			content = "<p>InvocationTargetException para <i>" + className + "." + methodName + "(), " + e.getMessage() + "</i></p>";
+			render(content);
+
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -32,6 +32,7 @@ public class TableDojo extends Controller
 		}
 	}
 
+
 	public String display()
 	{
 		String out = "<h2>"+this.name+"</h2>\n";
