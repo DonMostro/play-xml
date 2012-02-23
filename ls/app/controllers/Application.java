@@ -129,6 +129,7 @@ public class Application extends Controller
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
+			Logger.error(e, methodName, componentParams);
 			content = "<p>InvocationTargetException para <i>" + className + "." + methodName + "(), " + e.getMessage() + "</i></p>";
 			render(content);
 

@@ -38,14 +38,26 @@ public class Controller
 		this.baseUrl = (String) Play.configuration.get("application.baseUrl");
 	}
 	
-    protected void initLayout() throws ParserConfigurationException, SAXException, IOException
+    protected void initLayout() 
     {
     	String pathComponents = (String) Play.configuration.get("application.pathComponents");
         Xml xml = new Xml(new File(pathComponents + "/" + this.page + ".xml"));
-        xml.parse();
+        try {
+			xml.parse();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.xml = xml;
         this.component = this.xml.getComponent(); 
         this.name = component.getAttribute("name");
+        System.out.println(name);
         this.target = component.getAttribute("target");
         this.elements = this.xml.getElements();
         this.tabs = this.xml.getTabs();
@@ -63,8 +75,8 @@ public class Controller
         for (int i=1; i<count; i++) {
         	Element attributes = (Element) this.elements.item(i).getAttributes();   // @$this->layout[$i]["TARGET"];
             String field = attributes.getAttribute("target");
-            if (this.form.get("field") != null) {
-            	params += "&$field=" + URLEncoder.encode(form.get("field"));
+            if (this.form.get(field) != null) {
+            	params += "&"+field+"=" + URLEncoder.encode(form.get(field));
             }
         }
         return params; 

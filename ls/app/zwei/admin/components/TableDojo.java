@@ -18,18 +18,7 @@ public class TableDojo extends Controller
 	public TableDojo(String page, String[] id, Map<String, String> form)
 	{
 		super(page, id, form);
-		try {
-			this.initLayout();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.initLayout();
 	}
 
 

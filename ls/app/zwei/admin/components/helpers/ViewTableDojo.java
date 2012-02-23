@@ -20,14 +20,17 @@ public class ViewTableDojo extends Controller
 	{
 		this.xml = xml;
 		String out = "";
+		
 		if (this.component.getAttribute("search") != null && this.component.getAttribute("search").equals("true")/* && $this->_acl->isUserAllowed($this->page, 'LIST')*/)
 		{
-			if (this.component.getAttribute("search_type").equals("multiple")){
+			if (this.component.getAttribute("search_type") != null && this.component.getAttribute("search_type").equals("multiple")){
 				//out += this.searcherMultiple(); [TODO] habilitar
-			}else{
+			} else {
 				//out += this.searcher(); [TODO] habilitar
 			}
 		}
+
+		
 		String params = this.getRequestedParams();
 		String store = "";
 		

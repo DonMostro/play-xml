@@ -25,11 +25,15 @@ public class Xml
 		this.file = file;
 	}
 	
-	public void parse() throws ParserConfigurationException, SAXException, IOException 
+	public void parse() throws ParserConfigurationException, SAXException, IOException
 	{
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document doc = db.parse(file);
+		DocumentBuilder db;
+		db = dbf.newDocumentBuilder();
+
+		Document doc;
+		doc = db.parse(file);
+
 		doc.getDocumentElement().normalize();
 		
 		this.component = doc.getDocumentElement();
