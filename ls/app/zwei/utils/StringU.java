@@ -10,19 +10,19 @@ public class StringU {
 	 * Transforma una variable a un string que sigue las convenciones Java
 	 * de nombres de clases
 	 */
-	public static java.lang.String toClassName(java.lang.String string)
+	public static String toClassName(java.lang.String string)
 	{
 		return toClassName(string, "_");
 	}
 	
 	
-	public static java.lang.String toClassName(java.lang.String string, java.lang.String limiter)
+	public static String toClassName(java.lang.String string, String limiter)
 	{
-		java.lang.String returns = "";
-		java.lang.String[] aString = string.split(limiter);
+		String returns = "";
+		String[] aString = string.split(limiter);
 		
 
-		for (java.lang.String s : aString ) {
+		for (String s : aString ) {
 			returns += toProperCase(s);
 		}
 
@@ -32,20 +32,25 @@ public class StringU {
 	/**
 	 * Transforma una variable a un string que sigue las convenciones Zend
 	 * de nombres de métodos
-	 * @param $string
-	 * @param $limiter
+	 * @param string
 	 * @return string
 	 */
-	public static java.lang.String toFunctionName(java.lang.String string)
+	public static String toFunctionName(java.lang.String string)
 	{
 		return toFunctionName(string, "_");
 	}
 	
-	
-	public static java.lang.String toFunctionName(java.lang.String string, java.lang.String limiter)
+	/**
+	 * Transforma una variable a un string que sigue las convenciones Zend
+	 * de nombres de métodos
+	 * @param string
+	 * @param limiter
+	 * @return
+	 */
+	public static String toFunctionName(java.lang.String string, java.lang.String limiter)
 	{
-		java.lang.String returns = "";
-		java.lang.String[] aString = string.split(limiter);
+		String returns = "";
+		String[] aString = string.split(limiter);
 		
 		int i = 0;
 		for(java.lang.String s: aString){
@@ -56,8 +61,20 @@ public class StringU {
 		return returns;		
 	}
 	
-	public static java.lang.String toProperCase(java.lang.String string) 
+	public static String toProperCase(String string) 
 	{
 	    return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+	}
+	
+	/**
+	 * Transforma una variable a un string que sigue las convenciones Zend
+	 * de nombres de variables simples
+	 * @param string
+	 * @return
+	 */
+	
+	public static String toVarName(String string)
+	{
+		return string.replaceAll("/(?<=[a-zA-Z])(?=[A-Z])/", "_");
 	}
 }

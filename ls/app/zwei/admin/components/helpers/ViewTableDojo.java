@@ -7,6 +7,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import zwei.admin.Controller;
 import zwei.admin.Xml;
+import zwei.utils.StringU;
 
 public class ViewTableDojo extends Controller
 {
@@ -68,7 +69,7 @@ public class ViewTableDojo extends Controller
 			String width = attributes.getNamedItem("width") != null ? attributes.getNamedItem("width").getNodeValue() : Integer.toString(widthCol);
 
 			if (attributes.getNamedItem("visible").getNodeValue().equals("true")){
-				out += "\t\t<th field=\""+target+"\" editable=\"false\" width=\""+width+"px\" "+formatter+">"+attributes.getNamedItem("name").getNodeValue()+"</th>\r\n";
+				out += "\t\t<th field=\""+ StringU.toFunctionName(target)+"\" editable=\"false\" width=\""+width+"px\" "+formatter+">"+attributes.getNamedItem("name").getNodeValue()+"</th>\r\n";
 			}
 		}
 		
