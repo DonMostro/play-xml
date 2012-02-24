@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -36,6 +37,7 @@ public class Controller
 		this.id = id;
 		this.form = form;
 		this.baseUrl = (String) Play.configuration.get("application.baseUrl");
+		this.initLayout();
 	}
 	
     protected void initLayout() 
@@ -57,7 +59,7 @@ public class Controller
         this.xml = xml;
         this.component = this.xml.getComponent(); 
         this.name = component.getAttribute("name");
-        System.out.println(name);
+        System.out.println("Cargado componente name: "+name);
         this.target = component.getAttribute("target");
         this.elements = this.xml.getElements();
         this.tabs = this.xml.getTabs();
@@ -69,16 +71,22 @@ public class Controller
     */
     public String getRequestedParams()
     { 
-    	int count = this.elements.getLength();
+
     	String params = "";
-    
-        for (int i=1; i<count; i++) {
-        	Element attributes = (Element) this.elements.item(i).getAttributes();   // @$this->layout[$i]["TARGET"];
-            String field = attributes.getAttribute("target");
-            if (this.form.get(field) != null) {
-            	params += "&"+field+"=" + URLEncoder.encode(form.get(field));
-            }
-        }
+
+    	try {
+	    	int count = this.elements.getLength();
+	        for (int i=1; i<count; i++) {
+	        	NamedNodeMap attributes = this.elements.item(i).getAttributes();   // @$this->layout[$i]["TARGET"];
+	            String field = attributes.getNamedItem("target").getNodeValue();
+	            if (this.form.get(field) != null) {
+	            	params += "&"+field+"=" + URLEncoder.encode(form.get(field));
+	            }
+	
+	        }
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
         return params; 
     }
     

@@ -35,7 +35,7 @@ public class Xml
 		doc = db.parse(file);
 
 		doc.getDocumentElement().normalize();
-		
+	
 		this.component = doc.getDocumentElement();
 		this.elements = doc.getElementsByTagName("element");
 		this.tabs = doc.getElementsByTagName("tab");

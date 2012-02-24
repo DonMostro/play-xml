@@ -18,7 +18,6 @@ public class TableDojo extends Controller
 	public TableDojo(String page, String[] id, Map<String, String> form)
 	{
 		super(page, id, form);
-		this.initLayout();
 	}
 
 

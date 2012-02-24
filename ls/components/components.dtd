@@ -3,9 +3,9 @@
 <!ATTLIST component
 	name CDATA #IMPLIED
 	type (table | table_dojo | settings | settings_dojo | php_info | curl_dojo) #REQUIRED
-	functions CDATA #IMPLIED  
 	excel (true | false) #IMPLIED
 	change_password (true | false) #IMPLIED
+	functions CDATA #IMPLIED  
 	functions_permissions (list | add | edit | delete) #IMPLIED
 	table_dojo_type (dojox.grid.EnhancedGrid) #IMPLIED
 	plugins CDATA #IMPLIED

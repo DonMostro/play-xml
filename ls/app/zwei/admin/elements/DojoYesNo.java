@@ -1,0 +1,123 @@
+/**
+ * 
+ */
+package zwei.admin.elements;
+
+import java.util.Map;
+
+/**
+ * Filtering Select Yes No
+ *
+ */
+public class DojoYesNo extends Element {
+
+	/**
+	 * @param visible
+	 * @param edit
+	 * @param name
+	 * @param target
+	 * @param value
+	 * @param params
+	 */
+	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+			String value, Map<String, String> params) {
+		super(visible, edit, name, target, value, params);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 * @param edit
+	 * @param name
+	 * @param target
+	 * @param value
+	 * @param params
+	 * @param form
+	 */
+	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+			String value, Map<String, String> params, Map<String, String> form) {
+		super(visible, edit, name, target, value, params, form);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 * @param edit
+	 * @param name
+	 * @param target
+	 * @param value
+	 */
+	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+			String value) {
+		super(visible, edit, name, target, value);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 * @param edit
+	 * @param name
+	 * @param target
+	 */
+	public DojoYesNo(boolean visible, boolean edit, String name, String target) {
+		super(visible, edit, name, target);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 * @param edit
+	 * @param name
+	 */
+	public DojoYesNo(boolean visible, boolean edit, String name) {
+		super(visible, edit, name);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 * @param edit
+	 */
+	public DojoYesNo(boolean visible, boolean edit) {
+		super(visible, edit);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param visible
+	 */
+	public DojoYesNo(boolean visible) {
+		super(visible);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * 
+	 */
+	public DojoYesNo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String edit(int i, int j) {
+		Map<String, String> selected = null;
+		selected.put("", "");
+		if (this.value.equals("1")) {
+			selected.put("1", "selected=\"selected\"");
+		} else {
+			selected.put("0", "selected=\"selected\"");
+		}
+		String returns = "<select dojoType=\"dijit.form.FilteringSelect\"  value=\"1\" style=\"width:50px;display:block\"  id=\"edit"+i+"_"+j+"\" name=\""+this.target+"["+i+"]\" >\n"+
+				"<option value=\"1\" "+selected.get("1")+">Sí</option>\n"+
+				"<option value=\"0\" "+selected.get("0")+">No</option>\n"+
+				"</select>\n";
+		
+		returns += "<script type=\"dojo/method\">\n"+
+        "function switchYesNo() {\n"+
+		"\tif (dijit.byId('edit"+i+"_"+j+"')).get('value') == '0') dijit.byId('edit{$i}_{$j}').set('value', '0')"+
+		"\telse if (dijit.byId('edit{$i}_{$j}')).get('value') == '1') dijit.byId('edit{$i}_{$j}').set('value', '1')"+
+		"}\n"+
+    	"</script>";
+		
+		return returns;
+	}
+}
