@@ -10,18 +10,18 @@ dojo.declare(
 	      firstValidation: true,
 
 	      textbox: function() {
-	        return "";
+	    	  return "";
 	      },
 
 	      postCreate: function() {
-	        this.inherited(arguments);
-	        dojo.connect(this.containerNode, 'onkeyup', this, 'validate');
+	    	  this.inherited(arguments);
+	    	  dojo.connect(this.containerNode, 'onkeyup', this, 'validate');
 	      },
 
 	      isValid: function() {
-	        this.inherited(arguments);
-	        //the 'true' part of this is to allow validation override
-	        return arguments[0] == true || this.containerNode.value.length > 0;
+	    	  this.inherited(arguments);
+	    	  //the 'true' part of this is to allow validation override
+	    	  return arguments[0] == true || this.containerNode.value.length > 0;
 	      },
 
 	      validate: function() {
@@ -103,7 +103,7 @@ function cargarDatosTituloAdm(bloqueLogoHTML, bloqueTituloHTML)
 function cargarPanelCentral(url) 
 {
 	var widget = dijit.byId("panel_central");
-    widget.set('href',base_url+url);
+    widget.set('href', base_url+url);
 }
 
 function cargarArbolMenu() 

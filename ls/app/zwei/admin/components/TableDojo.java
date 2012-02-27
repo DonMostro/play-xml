@@ -19,8 +19,6 @@ public class TableDojo extends Controller
 	{
 		super(page, id, form);
 	}
-
-
 	public String display()
 	{
 		String out = "<h2>"+this.name+"</h2>\n";
@@ -49,7 +47,7 @@ public class TableDojo extends Controller
 
 
 		} else {
-			if(this.component.getAttribute("add").equals("true") /*[TODO]  && $this->_acl->isUserAllowed($this->page, 'ADD') */){
+			if (this.component.getAttribute("add").equals("true") /*[TODO]  && $this->_acl->isUserAllowed($this->page, 'ADD') */){
 				out += "\t\t\t<td><button type=\"button\" dojoType=\"dijit.form.Button\" iconClass=\"dijitIconNewTask\" id=\"btnNuevoUsr\" onClick=\"showDialog('add');\">";
 				out += "Agregar "  + this.component.getAttribute("name");
 				out += "</button></td>\n";

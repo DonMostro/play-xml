@@ -14,12 +14,17 @@ import java.security.*;
 
 @Entity
 @Table(name="acl_users")
-public class AclUsers extends Model
+public class AclUsers extends JPA
 {
     @Required
     @ManyToOne
     @JoinColumn(name="acl_roles_id")
 	public AclRoles aclRolesId;
+    
+    
+	@Column(name="id")
+	@Id
+	public String id;
 	
 	@Column(name="user_name")
 	public String userName;
@@ -206,6 +211,17 @@ public class AclUsers extends Model
 	public String toString() 
 	{
 		return userName;
-	}	
+	}
+	
+	public List<AclUsers> findAll()
+	{
+		Query query = this.em().createNativeQuery(
+			    "SELECT * FROM acl_users "
+			
+				, AclUsers.class
+		);
+		return query.getResultList();
+		
+	}
 	
 }

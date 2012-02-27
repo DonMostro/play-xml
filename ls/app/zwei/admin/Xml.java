@@ -12,7 +12,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
+/**
+ * Parseo de componentes XML Zwei Admin
+ * @author rodrigo
+ *
+ */
 public class Xml 
 {
 	private File file;
@@ -20,11 +24,21 @@ public class Xml
 	private NodeList elements;
 	private NodeList tabs;
 
+	/**
+	 * Constructor, carga el archivo XML
+	 * @param file
+	 */
 	public Xml(File file) 
 	{
 		this.file = file;
 	}
 	
+	/**
+	 * Parsea el componente XML, inicializa componente, elementos y pestañas
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public void parse() throws ParserConfigurationException, SAXException, IOException
 	{
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -41,16 +55,28 @@ public class Xml
 		this.tabs = doc.getElementsByTagName("tab");
 	}
 	
+	/**
+	 * Retorna Nodos element (elementos de formulario)
+	 * @return
+	 */
 	public NodeList getElements()
 	{
 		return this.elements;
 	}
 	
+	/**
+	 * Retorna Nodos tab (pestañas de formulario)
+	 * @return
+	 */
 	public NodeList getTabs()
 	{
 		return this.tabs;
 	}
 	
+	/**
+	 * Retorna nodo principal (nodo component)
+	 * @return
+	 */
 	public Element getComponent()
 	{
 		return this.component;
