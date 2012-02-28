@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.w3c.dom.NamedNodeMap;
 
+import zwei.admin.ClassInvoker;
 import zwei.admin.Controller;
 import zwei.utils.StringU;
 
@@ -118,8 +119,78 @@ public class EditTableDojo extends Controller{
 	}
 
 	public String display() {
+		return this.display("edit");
+	}
+	
+	public String display(String mode) {
 		String out = this.out;
+		String pfx;
+		String elementEdit;
 		this.out = "";
+		int count = this.elements.getLength();
+		int i = 0;
+		NamedNodeMap attributes; 
+		
+		/**
+		 * Parámetros clase element
+		 */
+		String className;
+		String methodName = "edit";
+		Object[] elementParams;
+		Object[] editArguments;
+		ClassInvoker elementClass = null;
+		Class[] classParamsTypes = new Class[] { String.class, String[].class, Map.class };//Clases de parámetros del constructor element
+		Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método element.edit
+
+		
+		
+		
+		for (int j=1; j<count-1; j++) {
+			attributes = this.elements.item(j).getAttributes();
+			//foreach ($node as $k=>$v) if($k!='VALUE') $params[$k] = $v;
+			/*
+			if (attributes.getNamedItem("value") == null) {
+				attributes.setNamedItem("value");
+				attributes.getNamedItem("value").setNodeValue("");
+			}
+			*/
+    
+			/*
+			if (attributes.getNamedItem("value") != null || isset($form->{$node['TARGET']}) && is_array($form->{$node['TARGET']})){
+				$value = $node['VALUE'][$i];
+			} else {*/
+				String value = form.get(attributes.getNamedItem("target").getNodeValue()) != null ? form.get(attributes.getNamedItem("target").getNodeValue()) : "";
+			//}
+    
+			if (attributes.getNamedItem(mode).getNodeValue().equals("true")) {
+				className = "zwei.admin.elements_"+StringU.toClassName(attributes.getNamedItem("type").getNodeValue());
+				
+				elementClass = new ClassInvoker(className, classParamsTypes);
+				elementClass.initMethod(methodName, methodArgsTypes);
+				
+				elementParams = new Object [] { 
+						attributes.getNamedItem("visible").getNodeValue(), 
+						attributes.getNamedItem("edit").getNodeValue(), 
+						attributes.getNamedItem("name").getNodeValue(), 
+						attributes.getNamedItem("target").getNodeValue(),
+						value,
+						null
+				};
+
+				
+				elementEdit = (String) elementClass.getResult(elementParams, editArguments);
+				
+				if (mode.equals("add")) pfx="_add";
+				else pfx="";
+
+				if($node['TYPE'] != 'hidden'){
+					out +="<tr><td><label for=\"{$node['TARGET']}\">{$node['NAME']}</label></td><td>"+$element->edit($i, $pfx.$j)+"</td></tr>";
+				}else{
+					//out +=$element->edit($i,$pfx.$j);
+				}
+			}
+		}		
+		
 		return out;
 	}
 }
