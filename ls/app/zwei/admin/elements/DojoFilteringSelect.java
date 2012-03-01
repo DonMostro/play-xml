@@ -18,45 +18,37 @@ public class DojoFilteringSelect extends Element
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit, String name,
+	public DojoFilteringSelect(String name,
 			String target, String value, Map<String, String> params,
 			Map<String, String> form) {
-		super(visible, edit, name, target, value, params, form);
+		super(name, target, value, params, form);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit, String name,
+	public DojoFilteringSelect(String name,
 			String target, String value, Map<String, String> params) {
-		super(visible, edit, name, target, value, params);
+		super(name, target, value, params);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit, String name,
+	public DojoFilteringSelect(String name,
 			String target, String value) {
-		super(visible, edit, name, target, value);
+		super(name, target, value);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit, String name,
+	public DojoFilteringSelect(String name,
 			String target) {
-		super(visible, edit, name, target);
+		super(name, target);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit, String name) {
-		super(visible, edit, name);
+	public DojoFilteringSelect(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DojoFilteringSelect(boolean visible, boolean edit) {
-		super(visible, edit);
-		// TODO Auto-generated constructor stub
-	}
 
-	public DojoFilteringSelect(boolean visible) {
-		super(visible);
-		// TODO Auto-generated constructor stub
-	}
 
 	public String edit(int i, int j)
 	{
@@ -76,10 +68,10 @@ public class DojoFilteringSelect extends Element
 	{
         if (this.value == null) {
         	this.value = form.get(this.target) != null ? form.get(this.target) : null;
-        } else {
+        } /*else {
             value = this.value;
         }
-		
+		*/
 
         
         //$id = !empty($this->params['TABLE_PK']) ? $this->params['TABLE_PK'] : $model->getName().'.id';

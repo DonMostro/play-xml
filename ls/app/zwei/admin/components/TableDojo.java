@@ -88,7 +88,7 @@ public class TableDojo extends Controller
 		
 		if (this.component.getAttribute("add").equals("true") && /*&& ($this->_acl->isUserAllowed($this->page, 'ADD') || $this->_acl->isUserAllowed($this->page, 'EDIT'))*/ !firstElement.getNodeName().equals("tab"))	{
 			 
-			out += "<div dojoType=\"dijit.Dialog\" id=\"formDialogo\" title=\"Agregar {$viewtable->layout[0]['NAME']};\" execute=\"modify('{$viewtable->layout[0]['TARGET']}',arguments[0]);\">\r\n";
+			out += "<div dojoType=\"dijit.Dialog\" id=\"formDialogo\" title=\"Agregar " + this.component.getAttribute("name") + ";\" execute=\"modify('" + this.component.getAttribute("target") + "',arguments[0]);\">\r\n";
 			out += "\t"+editTable.display("add");
 			out += "\n</div>\r\n";
 
@@ -96,7 +96,7 @@ public class TableDojo extends Controller
 
 		if (this.component.getAttribute("edit").equals("true") && /*($this->_acl->isUserAllowed($this->page, 'EDIT')) && */ !firstElement.getNodeName().equals("tab"))
 		{
-			out += "<div dojoType=\"dijit.Dialog\" id=\"formDialogoEditar\" title=\"Agregar {$viewtable->layout[0]['NAME']};\" execute=\"modify('{$viewtable->layout[0]['TARGET']}',arguments[0]);\">\r\n";
+			out += "<div dojoType=\"dijit.Dialog\" id=\"formDialogoEditar\" title=\"Agregar " + this.component.getAttribute("name") + ";\" execute=\"modify('" + this.component.getAttribute("target") + "',arguments[0]);\">\r\n";
 			out += "\t"+editTable.display("edit");
 			out += "\n</div>\r\n";
 		}

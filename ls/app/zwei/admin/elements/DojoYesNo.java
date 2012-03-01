@@ -19,9 +19,9 @@ public class DojoYesNo extends Element {
 	 * @param value
 	 * @param params
 	 */
-	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+	public DojoYesNo(String name, String target,
 			String value, Map<String, String> params) {
-		super(visible, edit, name, target, value, params);
+		super(name, target, value, params);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,9 +34,9 @@ public class DojoYesNo extends Element {
 	 * @param params
 	 * @param form
 	 */
-	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+	public DojoYesNo(String name, String target,
 			String value, Map<String, String> params, Map<String, String> form) {
-		super(visible, edit, name, target, value, params, form);
+		super(name, target, value, params, form);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -47,9 +47,9 @@ public class DojoYesNo extends Element {
 	 * @param target
 	 * @param value
 	 */
-	public DojoYesNo(boolean visible, boolean edit, String name, String target,
+	public DojoYesNo(String name, String target,
 			String value) {
-		super(visible, edit, name, target, value);
+		super(name, target, value);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -59,8 +59,8 @@ public class DojoYesNo extends Element {
 	 * @param name
 	 * @param target
 	 */
-	public DojoYesNo(boolean visible, boolean edit, String name, String target) {
-		super(visible, edit, name, target);
+	public DojoYesNo(String name, String target) {
+		super(name, target);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -69,27 +69,11 @@ public class DojoYesNo extends Element {
 	 * @param edit
 	 * @param name
 	 */
-	public DojoYesNo(boolean visible, boolean edit, String name) {
-		super(visible, edit, name);
+	public DojoYesNo(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param visible
-	 * @param edit
-	 */
-	public DojoYesNo(boolean visible, boolean edit) {
-		super(visible, edit);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param visible
-	 */
-	public DojoYesNo(boolean visible) {
-		super(visible);
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * 

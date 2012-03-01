@@ -29,10 +29,8 @@ public class Element {
 	 * @param value
 	 * @param params
 	 */
-	public Element(boolean visible, boolean edit, String name, String target, String value, Map<String, String> params) 
+	public Element(String name, String target, String value, Map<String, String> params) 
 	{
-		this.visible = visible;
-		this.edit = edit;
 		this.name = name;
 		this.target = target;
 		this.value = value;
@@ -40,11 +38,9 @@ public class Element {
 	}
 	
 	
-	public Element(boolean visible, boolean edit, String name, String target, String value, 
+	public Element(String name, String target, String value, 
 			Map<String, String> params, Map<String, String> form) 
 	{
-		this.visible = visible;
-		this.edit = edit;
 		this.name = name;
 		this.target = target;
 		this.value = value;
@@ -60,10 +56,8 @@ public class Element {
 	 * @param target
 	 * @param value
 	 */
-	public Element(boolean visible, boolean edit, String name, String target, String value) 
+	public Element(String name, String target, String value) 
 	{
-		this.visible = visible;
-		this.edit = edit;
 		this.name = name;
 		this.target = target;
 		this.value = value;
@@ -76,10 +70,8 @@ public class Element {
 	 * @param name
 	 * @param target
 	 */
-	public Element(boolean visible, boolean edit, String name, String target) 
+	public Element(String name, String target) 
 	{
-		this.visible = visible;
-		this.edit = edit;
 		this.name = name;
 		this.target = target;
 		this.value = "";
@@ -91,38 +83,9 @@ public class Element {
 	 * @param edit
 	 * @param name
 	 */
-	public Element(boolean visible, boolean edit, String name) 
+	public Element(String name) 
 	{
-		this.visible = visible;
-		this.edit = edit;
 		this.name = name;
-		this.target = "";
-		this.value = "";
-	}
-	
-	/**
-	 * 
-	 * @param visible
-	 * @param edit
-	 */
-	public Element(boolean visible, boolean edit) 
-	{
-		this.visible = visible;
-		this.edit = edit;
-		this.name = "";
-		this.target = "";
-		this.value = "";
-	}
-	
-	/**
-	 * 
-	 * @param visible
-	 */
-	public Element(boolean visible) 
-	{
-		this.visible = visible;
-		this.edit = false;
-		this.name = "";
 		this.target = "";
 		this.value = "";
 	}
@@ -132,8 +95,6 @@ public class Element {
 	 */
 	public Element() 
 	{
-		this.visible = true;
-		this.edit = false;
 		this.name = "";
 		this.target = "";
 		this.value = "";
