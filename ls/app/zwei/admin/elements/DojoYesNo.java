@@ -48,8 +48,7 @@ public class DojoYesNo extends Element {
 	 * @param target
 	 * @param value
 	 */
-	public DojoYesNo(String name, String target,
-			String value) {
+	public DojoYesNo(String name, String target, String value) {
 		super(name, target, value);
 		// TODO Auto-generated constructor stub
 	}
@@ -97,10 +96,10 @@ public class DojoYesNo extends Element {
 				"</select>\n";
 		
 		returns += "<script type=\"dojo/method\">\n"+
-        "function switchYesNo() {\n"+
-		"\tif (dijit.byId('edit"+i+"_"+j+"')).get('value') == '0') dijit.byId('edit{$i}_{$j}').set('value', '0')"+
-		"\telse if (dijit.byId('edit{$i}_{$j}')).get('value') == '1') dijit.byId('edit{$i}_{$j}').set('value', '1')"+
-		"}\n"+
+        "\tfunction switchYesNo() {\n"+
+		"\t\tif (dijit.byId('edit"+i+"_"+j+"')).get('value') == '0') dijit.byId('edit"+i+"_"+j+"').set('value', '0')\n"+
+		"\t\telse if (dijit.byId('edit"+i+"_"+j+"')).get('value') == '1') dijit.byId('edit"+i+"_"+j+"').set('value', '1')\n"+
+		"\t}\n"+
     	"</script>";
 		
 		return returns;
