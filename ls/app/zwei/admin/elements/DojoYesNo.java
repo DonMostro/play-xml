@@ -3,6 +3,7 @@
  */
 package zwei.admin.elements;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -83,7 +84,7 @@ public class DojoYesNo extends Element {
 	}
 
 	public String edit(int i, int j) {
-		Map<String, String> selected = null;
+		Map<String, String> selected = new HashMap();
 		selected.put("", "");
 		if (this.value.equals("1")) {
 			selected.put("1", "selected=\"selected\"");
@@ -92,7 +93,7 @@ public class DojoYesNo extends Element {
 		}
 		String returns = "<select dojoType=\"dijit.form.FilteringSelect\"  value=\"1\" style=\"width:50px;display:block\"  id=\"edit"+i+"_"+j+"\" name=\""+this.target+"["+i+"]\" >\n"+
 				"<option value=\"1\" "+selected.get("1")+">Sí</option>\n"+
-				"<option value=\"0\" "+selected.get("0")+">No</option>\n"+
+				"<option value=\"0\" "+selected.get("2")+">No</option>\n"+
 				"</select>\n";
 		
 		returns += "<script type=\"dojo/method\">\n"+

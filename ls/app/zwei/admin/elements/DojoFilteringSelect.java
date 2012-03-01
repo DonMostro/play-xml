@@ -182,10 +182,10 @@ public class DojoFilteringSelect extends Element
         
             if (this.value == null) {
                 value = this.form.get(this.target) != null ? this.form.get(this.target) : null;
-            } else {
+            } /* else {
                 value = this.value;
             }
-
+			*/
             if (this.params.get("default_value") != null && this.params.get("default_text") != null) {
         		String text = this.params.get("default_text");
             	options += "<option value=\""+this.params.get("default_value")+"\">"+this.params.get("default_text")+"</option>\r\n";
@@ -204,15 +204,17 @@ public class DojoFilteringSelect extends Element
         	
             if (this.value == null) {
                 value = this.form.get(this.target) != null ? this.form.get(this.target) : null;
-            } else {
+            }/* else {
                 value = this.value;
-            }
+            }*/
             
             options = "";
-            String[] rows = this.params.get("list").split(",");
-            for (String row : rows) {
-                String selected = row == value ? "selected" : "";
-                options += "<option value=\""+row+"\" "+selected+" >"+row+"</option>\r\n";
+            String[] rows = this.params.get("list") !=null ? this.params.get("list").split(",") : null;
+            if (rows != null) {
+	            for (String row : rows) {
+	                String selected = row == value ? "selected" : "";
+	                options += "<option value=\""+row+"\" "+selected+" >"+row+"</option>\r\n";
+	            }
             }
         }
 		return options;
