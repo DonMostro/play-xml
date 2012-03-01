@@ -170,7 +170,8 @@ public class EditTableDojo extends Controller{
 		this.out += "\t\t\t'action'      :'add',\n" +
 				"\t\t\t'model'     : model,\n" +
 				"\t\t\t'format'    : 'json'\n" +
-				"\t\t\t},handleAs: 'json',\n" +
+				"\t\t\t},\n" +
+				"\t\t\thandleAs: 'json',\n" +
 				"\t\t\tsync: true,\n" +
 				"\t\t\tpreventCache: true,\n" +
 				"\t\t\ttimeout: 5000,\n" +
@@ -191,14 +192,12 @@ public class EditTableDojo extends Controller{
 			    "\tfunction actualizar(model, items, id) {\n" +
 			    "\t\tvar res = '';\n";
 		
-		/*
-           $this->_out .= "
-        
-            dojo.xhrPost( {
-                url: base_url+'objects',
-                content: {
-                ";
-
+		
+           this.out += ""+
+	        "\t\tdojo.xhrPost( {\n" +
+	        "\t\turl: base_url+'objects',\n" +
+	        "\t\tcontent: {\n";
+           /*
 
             //for ($i=0; $i<$vcount; $i++) {
             	//if (in_array($this->layout[1]['VALUE'][$i], $this->id) || $vcount==1) {
