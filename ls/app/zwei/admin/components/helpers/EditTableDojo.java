@@ -46,17 +46,17 @@ public class EditTableDojo extends Controller{
 				pfx = "_add";
 				this.out += "\t\t\ttry{\n";
 				if (attributes.getNamedItem("type").getNodeValue().equals("dojo_filtering_select") || attributes.getNamedItem("type").getNodeValue().equals("dojo_yes_no")) {
-					this.out += "\t\t\t\tdijit.byId('edit"+Integer.toString(i)+"_"+pfx+Integer.toString(j)+"').set('value',0);\n";
+					this.out += "\t\t\t\tdijit.byId('edit"+i+"_"+pfx+j+"').set('value',0);\n";
 					// workaround bug dojo para limpiar selects despues de insertar
 					// de otra forma notifica como opción NO valida una opción SI válida y confunde a usuario
-					cleanFilteringSelects += "\t\t\t\t dijit.byId('edit"+Integer.toString(i)+"_"+pfx+Integer.toString(j)+"').set('value', '');\n";
+					cleanFilteringSelects += "\t\t\t\t dijit.byId('edit"+i+"_"+pfx+j+"').set('value', '');\n";
 				} else if (attributes.getNamedItem("type").getNodeValue().equals("select")) {
-					this.out += "\t\t\t\tselectValueSet('edit"+Integer.toString(i)+"_"+pfx+Integer.toString(j)+"', '0');\n";
+					this.out += "\t\t\t\tselectValueSet('edit"+i+"_"+pfx+j+"', '0');\n";
 				} else if (attributes.getNamedItem("search_table_target") != null && (attributes.getNamedItem("search_table_target").getNodeValue().equals(attributes.getNamedItem("target").getNodeValue()))){
 					//esto debiera tener un type="hidden"
-					this.out += "\t\t\t\tdocument.getElementById('edit"+Integer.toString(i)+"_"+pfx+Integer.toString(j)+"').value = dijit.byId('search').get('value');\n";
+					this.out += "\t\t\t\tdocument.getElementById('edit"+i+"_"+pfx+j+"').value = dijit.byId('search').get('value');\n";
 				} else {
-					this.out += "\t\t\t\tdocument.getElementById('edit"+Integer.toString(i)+"_"+pfx+Integer.toString(j)+"').value = '';\n";
+					this.out += "\t\t\t\tdocument.getElementById('edit"+i+"_"+pfx+j+"').value = '';\n";
 				}
 				this.out += "\t\t\t}catch(e){console.log(e)}\n";
 			}
@@ -91,7 +91,7 @@ public class EditTableDojo extends Controller{
 					//$oElement = new $sElement($node['VISIBLE'], '', '', $node['TARGET'], '', $params);
 					//this.out += $oElement->editCustomDisplay($i, $pfx.$j);    
 				} else {
-					this.out += "\t\t\t\tdocument.getElementById('edit"+i+"_"+pfx+j+"').value = items[0].{"+StringU.toFunctionName(attributes.getNamedItem("target").getNodeValue())+"};\n";
+					this.out += "\t\t\t\tdocument.getElementById('edit"+i+"_"+pfx+j+"').value = items[0]."+StringU.toFunctionName(attributes.getNamedItem("target").getNodeValue())+";\n";
 				}
 				this.out += "\t\t\t}catch(e){console.log(e)}\n";
 			}
@@ -100,7 +100,7 @@ public class EditTableDojo extends Controller{
 		this.out +="\t\t\ttry{formDlg.set('title','Editar "+this.component.getAttribute("name")+"');}catch(e){console.debug(e);}\n" +
 				"\t\t}\n"+
 				"\t\tformDlg.show();\n"+
-				"\t}\n";
+				"\t}\n\n";
 		
 		String additionalValidation = "";
 
@@ -139,7 +139,7 @@ public class EditTableDojo extends Controller{
 	            "\t\t	alert('Ha ocurrido un error, verifique datos o intente más tarde');\n" +
 	            "\t\t}\n" +
 	            "\t\tcargarDatos(model);\n" +
-	            "\t}\n";
+	            "\t}\n\n";
 	    
 		this.out += "" +
 	        "\tfunction insertar(model, items) {\n" +
@@ -177,45 +177,43 @@ public class EditTableDojo extends Controller{
 				"\t\t\ttimeout: 5000,\n" +
 				"\t\t\tload: function(respuesta){\n" +
 				"\t\t\tconsole.debug(dojo.toJson(respuesta));\n" +
-				"\t\t\t"+cleanFilteringSelects + "\n"+
+				"\t\t\t" + cleanFilteringSelects + "\n"+
 			    "\t\t\tres = respuesta;\n" +
 			    "\t\t\treturn respuesta;\n" +
 			    "\t\t\t},\n" +
 			    "\t\t\terror:function(err){\n" +
-			    "\t\t\t//alert('Error en comunicacion de datos. error: '+err); alert('Ha ocurrido un error, por favor reinicie sesión');\n" +
+			    "\t\t\talert('Ha ocurrido un error, por favor reinicie sesión');\n" +
 			    "\t\t\twindow.location.href = base_url + 'index/login';\n" +
 			    "\t\t\treturn err;\n" +
 			    "\t\t\t}\n" +
 			    "\t\t});\n" +
 			    "\t\treturn res;\n" +
-			    "\t}" +
+			    "\t}\n\n" +
+			    
+			    
 			    "\tfunction actualizar(model, items, id) {\n" +
 			    "\t\tvar res = '';\n";
 		
 		
-           this.out += ""+
+		this.out += ""+
 	        "\t\tdojo.xhrPost( {\n" +
 	        "\t\turl: base_url+'objects',\n" +
 	        "\t\tcontent: {\n";
-           /*
 
-            //for ($i=0; $i<$vcount; $i++) {
-            	//if (in_array($this->layout[1]['VALUE'][$i], $this->id) || $vcount==1) {
-            		for ($j=1; $j<$count; $j++) {
-            			$node = $this->layout[$j];
-            			$params = array();
-            			if ($node['EDIT']) {
-            				$pfx = '';
-            				if ($node['TYPE']=='dojo_filtering_select' || $node['TYPE']=='dojo_yes_no'){
-            					$this->_out.="     'data[{$node['TARGET']}]' : dijit.byId('edit{$i}_{$pfx}{$j}').get('value'), \r\n";
-            				} else {
-            					$this->_out.="     'data[{$node['TARGET']}]' : document.getElementById('edit{$i}_{$pfx}{$j}').value, \r\n";
-            				}
-            			}
-            		}
-            	//}
-            //}
-		*/
+
+
+		for (int j=1; j<count-1; j++) {
+			attributes = this.elements.item(j).getAttributes(); 
+			if (attributes.getNamedItem("edit").getNodeValue().equals("true")) {
+				pfx = "";
+				if (attributes.getNamedItem("type").getNodeValue().equals("dojo_filtering_select") || attributes.getNamedItem("type").getNodeValue().equals("dojo_yes_no")){
+					this.out +="\t\t'data["+attributes.getNamedItem("target").getNodeValue()+"]' : dijit.byId('edit"+i+"_"+pfx+j+"').get('value'), \r\n";
+				} else {
+					this.out +="\t\t'data["+attributes.getNamedItem("target").getNodeValue()+"]' : document.getElementById('edit"+i+"_"+pfx+j+"').value, \r\n";
+				}
+			}
+		}
+
 		this.out += "" +
 			"\t\t\t'id'      :id,\n" +
 			"\t\t\t'action'  :'edit',\n" +
