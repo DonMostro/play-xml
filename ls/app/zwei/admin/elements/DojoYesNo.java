@@ -91,12 +91,12 @@ public class DojoYesNo extends Element {
 			selected.put("0", "selected=\"selected\"");
 		}
 		String returns = "<select dojoType=\"dijit.form.FilteringSelect\"  value=\"1\" style=\"width:50px;display:block\"  id=\"edit"+i+"_"+j+"\" name=\""+this.target+"["+i+"]\" >\n"+
-				"<option value=\"1\" "+selected.get("1")+">Sí</option>\n"+
+				"<option value=\"1\" "+selected.get("1")+">S&iacute;</option>\n"+
 				"<option value=\"0\" "+selected.get("2")+">No</option>\n"+
 				"</select>\n";
 		
 		returns += "<script type=\"dojo/method\">\n"+
-        "\tfunction switchYesNo() {\n"+
+        "\tfunction switchYesNo"+i+"_"+j+"() {\n"+
 		"\t\tif (dijit.byId('edit"+i+"_"+j+"')).get('value') == '0') dijit.byId('edit"+i+"_"+j+"').set('value', '0')\n"+
 		"\t\telse if (dijit.byId('edit"+i+"_"+j+"')).get('value') == '1') dijit.byId('edit"+i+"_"+j+"').set('value', '1')\n"+
 		"\t}\n"+

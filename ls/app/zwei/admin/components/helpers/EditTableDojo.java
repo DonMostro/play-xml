@@ -256,6 +256,7 @@ public class EditTableDojo extends Controller{
 		String pfx;
 		String elementEdit = null;
 		this.out = "";
+		out += "<table>\r\n";
 		int count = this.elements.getLength();
 		int i = 0;
 		NamedNodeMap attributes; 
@@ -354,6 +355,7 @@ public class EditTableDojo extends Controller{
 				}
 			}
 		}		
+		out += "</table>\r\n";
 		
 		return out;
 	}

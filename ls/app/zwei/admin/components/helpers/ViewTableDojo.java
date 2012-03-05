@@ -56,8 +56,12 @@ public class ViewTableDojo extends Controller
 		}
 		widthTable += 40;
 		
-		String dojoType = this.component.getAttribute("table_dojo_type") != null ? "dojoType=\""+this.component.getAttribute("table_dojo_type")+"\"" : "dojoType=\"dojox.grid.DataGrid\"";
-		String plugins = this.component.getAttribute("plugins") != null ? "plugins=\""+this.component.getAttribute("plugins")+"\"" : "plugin=\"dojox.grid.DataGrid\"";
+		System.out.println("Attr:");
+		System.out.println(this.component.getAttribute("table_dojo_type"));
+		System.out.println(this.component.getAttribute("plugins"));
+		
+		String dojoType = !this.component.getAttribute("table_dojo_type").equals("") ? "dojoType=\""+this.component.getAttribute("table_dojo_type")+"\"" : "dojoType=\"dojox.grid.DataGrid\"";
+		String plugins = !this.component.getAttribute("plugins").equals("") ? "plugins=\""+this.component.getAttribute("plugins")+"\"" : "plugin=\"dojox.grid.DataGrid\"";
 
 		out += "\r\n<table "+ dojoType + plugins + " id=\"main_grid\" jsId=\"main_grid\" " + store + " clientSort=\"true\" style=\"width:" + widthTable + "px; height: 320px;\" rowSelector=\"20px\" rowsPerPage=\"10\" noDataMessage=\"Sin datos.\">\r\n<thead><tr>\r\n";
 
