@@ -56,10 +56,6 @@ public class ViewTableDojo extends Controller
 		}
 		widthTable += 40;
 		
-		System.out.println("Attr:");
-		System.out.println(this.component.getAttribute("table_dojo_type"));
-		System.out.println(this.component.getAttribute("plugins"));
-		
 		String dojoType = !this.component.getAttribute("table_dojo_type").equals("") ? "dojoType=\""+this.component.getAttribute("table_dojo_type")+"\"" : "dojoType=\"dojox.grid.DataGrid\"";
 		String plugins = !this.component.getAttribute("plugins").equals("") ? "plugins=\""+this.component.getAttribute("plugins")+"\"" : "plugin=\"dojox.grid.DataGrid\"";
 

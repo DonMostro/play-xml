@@ -50,7 +50,7 @@ public class DojoFilteringSelect extends Element
 
 
 
-	public String edit(int i, int j)
+	public String edit(String i, String j)
 	{
 		String readonly = this.params.get("readonly") != null && this.params.get("readonly").equals("true") ?  "readonly" : "";
 		String disabled = this.params.get("disabled") != null && this.params.get("disabled").equals("true") ? "disabled" : "";
@@ -64,7 +64,7 @@ public class DojoFilteringSelect extends Element
 				+ readonly + disabled + value + onchange + required + invalid_message + prompt_message + " style=\"display:block\" >\r\n"+options+"\r\n</select>\r\n";		
 	}
 	
-	public String display(int i, int j)
+	public String display(String i, String j)
 	{
         if (this.value == null) {
         	this.value = form.get(this.target) != null ? form.get(this.target) : null;

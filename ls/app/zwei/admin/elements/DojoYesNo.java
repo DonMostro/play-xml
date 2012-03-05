@@ -82,7 +82,7 @@ public class DojoYesNo extends Element {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String edit(int i, int j) {
+	public String edit(String i, String j) {
 		Map<String, String> selected = new HashMap();
 		selected.put("", "");
 		if (this.value.equals("1")) {

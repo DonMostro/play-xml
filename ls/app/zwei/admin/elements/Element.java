@@ -106,7 +106,7 @@ public class Element {
 	 * @param j
 	 * @return
 	 */
-	public String display(int i, int j) {
+	public String display(String i, String j) {
 		String href;
 		if (this.params.get("link") != null) {
 			if (this.params.get("image") != null) {
@@ -129,7 +129,7 @@ public class Element {
 	 * @return input html
 	 */
 
-	public String edit(int i, int j) {
+	public String edit(String i, String j) {
 		String readonly = this.params.get("readonly") != null && this.params.get("readonly").equals("true") ? "readonly" : "";
 		String disabled = this.params.get("disabled") != null && this.params.get("disabled").equals("true") ? "disabled" : "";
 		//return "<input type=\"text\" style=\"display:$display\" id=\"edit{$i}_{$j}\" name=\"$this->target[$i]\" value=\"".str_replace('"','&quot;',$this->value)."\" $readonly $disabled/>";

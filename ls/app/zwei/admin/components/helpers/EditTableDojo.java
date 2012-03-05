@@ -261,6 +261,8 @@ public class EditTableDojo extends Controller{
 		int i = 0;
 		NamedNodeMap attributes; 
 		
+		pfx = mode.equals("add") ? "_add" : "";
+		
 		/**
 		 * Parámetros clase element
 		 */
@@ -270,7 +272,7 @@ public class EditTableDojo extends Controller{
 		Object[] editArguments = null;
 		ClassInvoker elementClass = null;
 		Class[] classParamsTypes = new Class[] { String.class, String.class, String.class, Map.class };//Clases de parámetros del constructor element
-		Class[] methodArgsTypes = new Class[] { int.class, int.class };//Clases de argumentos de método element.edit
+		Class[] methodArgsTypes = new Class[] { String.class, String.class };//Clases de argumentos de método element.edit
 
 
 		for (int j=1; j<count-1; j++) {
@@ -323,8 +325,8 @@ public class EditTableDojo extends Controller{
 				};
 
 				editArguments = new Object [] { 
-					0,
-					j
+					"0",
+					pfx+j
 				};
 				
 				
@@ -345,8 +347,7 @@ public class EditTableDojo extends Controller{
 					e.printStackTrace();
 				}
 				
-				if (mode.equals("add")) pfx = "_add";
-				else pfx = "";
+
 
 				if (attributes.getNamedItem("type").getNodeValue().equals("hidden")) {
 					out += "\t"+elementEdit;

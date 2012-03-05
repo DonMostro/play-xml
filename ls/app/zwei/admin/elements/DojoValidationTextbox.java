@@ -45,7 +45,7 @@ public class DojoValidationTextbox extends Element {
 	 * @param i
 	 * @param j
 	 */
-	public String edit(int i, int j) 
+	public String edit(String i, String j) 
 	{
 		String readonly = this.params.get("readonly") != null && this.params.get("readonly").equals("true") ?  "readonly" : "";
 		String disabled = this.params.get("disabled") != null && this.params.get("disabled").equals("true") ? "disabled" : "";

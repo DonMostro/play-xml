@@ -8,11 +8,12 @@ import zwei.utils.HqlToSqlTranslator;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @javax.persistence.Entity
 @Table(name="acl_modules")
-public class AclModules extends Model
+public class AclModules extends JPA implements Serializable
 {
 
     @ManyToOne
@@ -33,6 +34,10 @@ public class AclModules extends Model
 
     @Column(name="approved")
     public String approved;
+
+    @Id
+    @Column(name="id")
+	public int id;
     
 
 	/**
@@ -43,6 +48,38 @@ public class AclModules extends Model
 	{
 	}
 
+	/**
+	 * Method 'AclModules'
+	 * 
+	 */
+	public AclModules(int id, String title)
+	{
+		this.id=id;
+		this.title=title;
+	}
+	
+	/**
+	 * Method 'getId'
+	 * 
+	 * @return int
+	 */
+	@Column(name="id")
+	public int getId()
+	{
+		return id;
+	}
+	
+	
+	/**
+	 * Method 'setId'
+	 * 
+	 * @param parentId
+	 */
+	public void setId(int id)
+	{
+		this.id = id;
+	}	
+	
 	/**
 	 * Method 'getParentId'
 	 * 
@@ -74,6 +111,7 @@ public class AclModules extends Model
 	{
 		return title;
 	}
+
 
 	/**
 	 * Method 'setTitle'
@@ -192,10 +230,6 @@ public class AclModules extends Model
 			    "WHERE acl_modules.tree = '1' " +
 			    "AND parent_id = " + parentId + " " +
 			    "GROUP BY acl_modules.id "
-			    //"AND acl_users.user_name = " + this.user + " " +			    
-			    
-			    //"select mod from aclModules " +
-				//"where parentId = " + parentId + //Query JPA				
 				, AclModules.class
 		);
 
@@ -266,5 +300,19 @@ public class AclModules extends Model
 		}
 	    
 		return nodes;
-	}	
+	}
+	
+	public List<AclModules> findAll(){
+		List<AclModules> returns = null;
+		Query query = this.em().createQuery(
+				"SELECT new AclModules(mod.id, mod.title) " +
+				"FROM AclModules mod "
+		);
+		
+		if (query.getResultList().size() > 0) {
+			returns = query.getResultList();	
+		}
+		return returns;
+		
+	}
 }
