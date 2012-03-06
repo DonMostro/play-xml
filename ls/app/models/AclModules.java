@@ -22,6 +22,8 @@ public class AclModules extends JPA implements Serializable
 
     @Column(name="title")
     public String title;
+    
+    //private String parentTitle;
 
     @Column(name="module")
     public String module;
@@ -52,12 +54,20 @@ public class AclModules extends JPA implements Serializable
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules(int id, String title)
+	public AclModules(int id, String title, String module, String linkable, String approved, String tree, AclModules parentId)
 	{
+		System.out.println(parentId.id);
+		//this.parentTitle=parentId.title;
 		this.id=id;
 		this.title=title;
+		this.module=module;
+		this.linkable=linkable;
+		this.approved=approved;
+		this.tree=tree;
 	}
 	
+	
+
 	/**
 	 * Method 'getId'
 	 * 
@@ -305,7 +315,7 @@ public class AclModules extends JPA implements Serializable
 	public List<AclModules> findAll(){
 		List<AclModules> returns = null;
 		Query query = this.em().createQuery(
-				"SELECT new AclModules(mod.id, mod.title) " +
+				"SELECT new AclModules(id, title, module, linkable, approved, tree, parentId) " +
 				"FROM AclModules mod "
 		);
 		
