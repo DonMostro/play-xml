@@ -36,7 +36,7 @@ public class EditTableDojo extends Controller{
 	    NamedNodeMap attributes; 
 	    
 	    //Map<String, String> params;
-		for (int j = 0; j<count-1; j++) {
+		for (int j = 0; j<count; j++) {
 			
 			attributes = this.elements.item(j).getAttributes(); 
 			System.out.println(attributes.getNamedItem("add").getNodeValue());
@@ -71,7 +71,7 @@ public class EditTableDojo extends Controller{
 			"\t\t\t}\n" +
 			"\t\t\tconsole.debug(items[0]);\r\n"; 
 		i = 0;
-		for (int j = 1;  j < count-1; j++) {
+		for (int j = 1;  j < count; j++) {
 			attributes = this.elements.item(j).getAttributes(); 
 			//params = null;
 			if (attributes.getNamedItem("edit").getNodeValue().equals("true")) {
@@ -149,7 +149,7 @@ public class EditTableDojo extends Controller{
 	        "\t\tcontent: {\n";
             i=0;
 
-    		for (int j=1; j<count-1; j++) {
+    		for (int j=1; j<count; j++) {
     			attributes = this.elements.item(j).getAttributes(); 
     			//params = null;
     			if(attributes.getNamedItem("add").getNodeValue().equals("true")){
@@ -202,7 +202,7 @@ public class EditTableDojo extends Controller{
 
 
 
-		for (int j=1; j<count-1; j++) {
+		for (int j=1; j<count; j++) {
 			attributes = this.elements.item(j).getAttributes(); 
 			if (attributes.getNamedItem("edit").getNodeValue().equals("true")) {
 				pfx = "";
@@ -275,7 +275,7 @@ public class EditTableDojo extends Controller{
 		Class[] methodArgsTypes = new Class[] { String.class, String.class };//Clases de argumentos de método element.edit
 
 
-		for (int j=1; j<count-1; j++) {
+		for (int j=1; j<count; j++) {
 			attributes = this.elements.item(j).getAttributes();
 			//foreach ($node as $k=>$v) if($k!='VALUE') $params[$k] = $v;
 			/*

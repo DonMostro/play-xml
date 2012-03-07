@@ -18,6 +18,7 @@ public class AclModules extends JPA implements Serializable
 
     @ManyToOne
     @JoinColumn(name="parent_id")
+    @JoinTable(name="acl_modules")
 	public AclModules parentId;
 
     @Column(name="title")
@@ -54,9 +55,9 @@ public class AclModules extends JPA implements Serializable
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules(int id, String title, String module, String linkable, String approved, String tree, AclModules parentId)
+	public AclModules(int id, String title, String module, String linkable, String approved, String tree)
 	{
-		System.out.println(parentId.id);
+		//System.out.println(parentId.id);
 		//this.parentTitle=parentId.title;
 		this.id=id;
 		this.title=title;
@@ -66,6 +67,22 @@ public class AclModules extends JPA implements Serializable
 		this.tree=tree;
 	}
 	
+	/**
+	 * Method 'AclModules'
+	 * 
+	 */
+	public AclModules(int id, String title, String module, String linkable, String approved, String tree, String parentTitle)
+	{
+		System.out.println(parentId.id);
+		//this.parentTitle=parentId.title;
+		this.id = id;
+		this.title = title;
+		this.module = module;
+		this.linkable = linkable;
+		this.approved = approved;
+		this.tree = tree;
+		//this.parentTitle = parentTitle;
+	}
 	
 
 	/**
@@ -227,6 +244,8 @@ public class AclModules extends JPA implements Serializable
 		List<AclModules> returns = null;
 		Query query = null;
 		
+		//[TODO] por falta de conocimientos en HQL se usa createNativeQuery(String SQL, class JPA) por ahora, 
+		// lo ideal sería usar createQuery(String HQL) para aprovechar las ventajas de Hibernate.
 		query = this.em().createNativeQuery(
 			    "SELECT acl_modules.id, acl_modules.parent_id, acl_modules.title, " +
 			    "acl_modules.module, acl_modules.tree, acl_modules.approved, acl_modules.linkable " +
@@ -292,9 +311,9 @@ public class AclModules extends JPA implements Serializable
 							subnodes2.put("id", branch2.getId());
 							subnodes2.put("label", branch2.getTitle());
 						
-							System.out.println("parent_id: " + key);
-							System.out.println("id: " + branch2.getId());
-							System.out.println("module: " + branch2.getModule());
+							//S ystem.out.println("parent_id: " + key);
+							//S ystem.out.println("id: " + branch2.getId());
+							//S ystem.out.println("module: " + branch2.getModule());
 							
 							if (branch2.getLinkable().equals("1")) {
 								subnodes2.put("url", "/application/components?p=" + branch2.getModule());
@@ -312,17 +331,28 @@ public class AclModules extends JPA implements Serializable
 		return nodes;
 	}
 	
-	public List<AclModules> findAll(){
-		List<AclModules> returns = null;
+	public List<AclModules> findAll() {
+		List<AclModules> modules = null;
 		Query query = this.em().createQuery(
-				"SELECT new AclModules(id, title, module, linkable, approved, tree, parentId) " +
-				"FROM AclModules mod "
+				"select new AclModules(mod.id, mod.title, mod.module, mod.linkable, mod.approved, mod.tree) " +
+				"from AclModules mod " 
+				
 		);
 		
 		if (query.getResultList().size() > 0) {
-			returns = query.getResultList();	
+			modules = query.getResultList();
+			int parentId = 0;
+			try {
+				parentId = modules.get(0).getId();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			query = this.em().createQuery("select mod.title AS parentTitle from AclModules mod where mod.id = "+parentId);
+			if (query.getResultList().size() > 0) {
+				List<AclModules> currentNode = query.getResultList();
+				//modules.add(currentNode.get(0));
+			}
 		}
-		return returns;
-		
+		return modules;
 	}
 }
