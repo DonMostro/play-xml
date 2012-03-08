@@ -18,29 +18,27 @@ public class AclModules extends JPA implements Serializable
 
     @ManyToOne
     @JoinColumn(name="parent_id")
-    @JoinTable(name="acl_modules")
-	public AclModules parentId;
+	private AclModules parentId;
 
     @Column(name="title")
-    public String title;
-    
-    //private String parentTitle;
+    private String title;
 
     @Column(name="module")
-    public String module;
+    private String module;
 
     @Column(name="tree")
-    public String tree;
+    private String tree;
 
     @Column(name="linkable")
-    public String linkable;
+    private String linkable;
 
     @Column(name="approved")
-    public String approved;
+    private String approved;
 
     @Id
     @Column(name="id")
-	public int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
     
 
 	/**
@@ -59,21 +57,21 @@ public class AclModules extends JPA implements Serializable
 	{
 		//System.out.println(parentId.id);
 		//this.parentTitle=parentId.title;
-		this.id=id;
-		this.title=title;
-		this.module=module;
-		this.linkable=linkable;
-		this.approved=approved;
-		this.tree=tree;
+		this.id = id;
+		this.title = title;
+		this.module = module;
+		this.linkable = linkable;
+		this.approved = approved;
+		this.tree = tree;
 	}
 	
 	/**
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules(int id, String title, String module, String linkable, String approved, String tree, String parentTitle)
+	public AclModules(int id, String title, String module, String linkable, String approved, String tree, AclModules parentId)
 	{
-		System.out.println(parentId.id);
+		//System.out.println(parentId.id);
 		//this.parentTitle=parentId.title;
 		this.id = id;
 		this.title = title;
@@ -81,10 +79,11 @@ public class AclModules extends JPA implements Serializable
 		this.linkable = linkable;
 		this.approved = approved;
 		this.tree = tree;
+		this.parentId = parentId;
 		//this.parentTitle = parentTitle;
 	}
-	
 
+	
 	/**
 	 * Method 'getId'
 	 * 
@@ -241,7 +240,7 @@ public class AclModules extends JPA implements Serializable
 
 	public List<AclModules> listGrantedResourcesByParentId(long parentId)
 	{	
-		List<AclModules> returns = null;
+		List<AclModules> modules = null;
 		Query query = null;
 		
 		//[TODO] por falta de conocimientos en HQL se usa createNativeQuery(String SQL, class JPA) por ahora, 
@@ -263,9 +262,9 @@ public class AclModules extends JPA implements Serializable
 		);
 
 		if (query.getResultList().size() > 0) {
-			returns = query.getResultList();	
+			modules = query.getResultList();	
 		}
-		return returns;
+		return modules;
 	}
 	
 	
@@ -333,26 +332,35 @@ public class AclModules extends JPA implements Serializable
 	
 	public List<AclModules> findAll() {
 		List<AclModules> modules = null;
-		Query query = this.em().createQuery(
-				"select new AclModules(mod.id, mod.title, mod.module, mod.linkable, mod.approved, mod.tree) " +
+		List<AclModules> returns = null;
+		Query query = null;
+		
+		query = this.em().createQuery(
+				"select new AclModules(mod.id, mod.title, mod.module, mod.linkable, mod.approved, mod.tree, mod.parentId) " +
 				"from AclModules mod " 
-				
 		);
+				
+		/*
+		query = this.em().createNativeQuery(
+				"SELECT acl_modules.id, acl_modules.title, acl_modules.module, acl_modules.linkable, " +
+				"acl_modules.approved, acl_modules.tree, " +
+				"parent.id AS parentId, parent.title AS parentTitle " +
+				"FROM acl_modules " +
+				"LEFT join acl_modules parent " +
+				"ON acl_modules.parent_id = parent.id ", 
+				AclModules.class);
+		*/
 		
 		if (query.getResultList().size() > 0) {
 			modules = query.getResultList();
-			int parentId = 0;
-			try {
-				parentId = modules.get(0).getId();
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
-			query = this.em().createQuery("select mod.title AS parentTitle from AclModules mod where mod.id = "+parentId);
-			if (query.getResultList().size() > 0) {
-				List<AclModules> currentNode = query.getResultList();
-				//modules.add(currentNode.get(0));
-			}
+			
+			Iterator<AclModules> it;
+			it = modules.iterator();
+			AclModules i = it.next();
+			int parentId = i.parentId.id;
+			String parentTitle = i.parentId.title;
 		}
+
 		return modules;
 	}
 }
