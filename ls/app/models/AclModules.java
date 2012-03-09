@@ -44,13 +44,20 @@ public class AclModules extends JPA implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
     
+	public AclModules()
+	{
+	}
 
+    
+    
 	/**
 	 * Method 'AclModules'
 	 * 
 	 */
-	public AclModules()
+	public AclModules(int id, String title)
 	{
+		this.id=id;
+		this.title=title;
 	}
 
 	/**

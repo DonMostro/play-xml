@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.persistence.Query;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -173,6 +175,7 @@ public class DojoFilteringSelect extends Element
 	    		String field = null;
 	            
 	            if (attributes.getNamedItem("table_method") != null) {
+	            	System.out.println(attributes.getNamedItem("table_method").getNodeValue());
 	                String method = StringU.toFunctionName(attributes.getNamedItem("table_method").getNodeValue());
 	               // $select = $model->$method();
 	            } else {
@@ -184,11 +187,15 @@ public class DojoFilteringSelect extends Element
 	                    //$select = $model->select(array($this->params['FIELD'], $id));
 	                }    
 	            }
-	            List<JPASupport> rows = null;
+	            List<JPA> rows = null;
 	            //Zwei_Utils_Debug::writeBySettings($select->__toString(), 'query_log');
 	            
-	            rows = (List<JPASupport>) JPA.em().createQuery(field+","+id);
+	            Query query = JPA.em().createQuery("SELECT new " + modelName + "(" + id +","+ "title" + ") FROM " + modelName);
 	
+	            if (query.getResultList().size() > 0) {
+	            	rows = query.getResultList();
+	            }	
+	            
 	        
 	            if (this.value == null) {
 	                value = this.form.get(this.target) != null ? this.form.get(this.target) : null;
@@ -200,15 +207,27 @@ public class DojoFilteringSelect extends Element
 	        		String text = attributes.getNamedItem("default_text").getNodeValue();
 	            	options += "<option value=\""+attributes.getNamedItem("default_value")+"\">"+attributes.getNamedItem("default_text")+"</option>\r\n";
 	        	}
-	
+
+	            Iterator<JPA> it = rows.iterator();
+	            
+	            while (it.hasNext()) {
+	            	  Object element = it.next(); 
+	            	  System.out.print(element + " ");
+	            }
+	            
+	            
 			    
-				for (JPASupport row : rows) {
-	                String selected = row.findKey(id).toString() == this.value ? "selected" : "";
+			    
+				for (JPA row : rows) {
+					System.out.println(row);
+					/*
+	                String selected = row .findKey(id).toString() == this.value ? "selected" : "";
 	                if (attributes.getNamedItem("table_field") != null) {
 	                    options += "<option value=\""+row.findKey(id).toString()+"\" "+selected+" >"+attributes.getNamedItem("table_field")+"</option>\r\n";
 	                } else {
 	                    options += "<option value=\""+row.findKey(id).toString()+"\" "+selected+" >"+attributes.getNamedItem("field")+"</option>\r\n";
-	                }    
+	                } 
+	                */   
 	            }
 	        } else {
 	        	
