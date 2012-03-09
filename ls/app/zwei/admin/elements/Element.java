@@ -2,6 +2,9 @@ package zwei.admin.elements;
 
 import java.util.Map;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 /**
  * 
  * Elementos para los formularios del CMS
@@ -17,7 +20,7 @@ public class Element {
 	protected String name;
 	protected String target;
 	protected String value;
-	protected Map<String, String> params;
+	protected Node params;
 	protected Map<String, String> form;
 	
 	/**
@@ -29,7 +32,15 @@ public class Element {
 	 * @param value
 	 * @param params
 	 */
-	public Element(String name, String target, String value, Map<String, String> params) 
+	public Element(String name, String target, String value, Map<String, String> form) 
+	{
+		this.name = name;
+		this.target = target;
+		this.value = value;
+		this.form = form;
+	}
+	
+	public Element(String name, String target, String value, Node params) 
 	{
 		this.name = name;
 		this.target = target;
@@ -38,8 +49,9 @@ public class Element {
 	}
 	
 	
+	
 	public Element(String name, String target, String value, 
-			Map<String, String> params, Map<String, String> form) 
+			Node params, Map<String, String> form) 
 	{
 		this.name = name;
 		this.target = target;
@@ -108,13 +120,14 @@ public class Element {
 	 */
 	public String display(String i, String j) {
 		String href;
-		if (this.params.get("link") != null) {
-			if (this.params.get("image") != null) {
-				value = "<img src=\"" + this.params.get("image") + " alt=\"" + this.params.get("value") + "\"/>";
+		NamedNodeMap attributes = this.params.getAttributes(); 
+		if (attributes.getNamedItem("link") != null) {
+			if (attributes.getNamedItem("image") != null) {
+				value = "<img src=\"" + attributes.getNamedItem("image").getNodeValue() + " alt=\"" + attributes.getNamedItem("value").getNodeValue() + "\"/>";
 			} else {
-				value = this.params.get("default");
+				value = attributes.getNamedItem("default").getNodeValue();
 			}
-			href = this.params.get("link").replace("{id}", this.params.get("id"));
+			href = attributes.getNamedItem("link").getNodeValue().replace("{id}", attributes.getNamedItem("id").getNodeValue());
 			href = href.replace("{value}", this.value);
 			return "<a id=\"field" + i + "_" + j + "\" title=\"" + this.value + "\" name=\"" + this.target + "[]\" href=\"" + href + "\">" + value + "</a>";
 		}
@@ -130,8 +143,9 @@ public class Element {
 	 */
 
 	public String edit(String i, String j) {
-		String readonly = this.params.get("readonly") != null && this.params.get("readonly").equals("true") ? "readonly" : "";
-		String disabled = this.params.get("disabled") != null && this.params.get("disabled").equals("true") ? "disabled" : "";
+		NamedNodeMap attributes = this.params.getAttributes(); 
+		String readonly = attributes.getNamedItem("readonly") != null && attributes.getNamedItem("readonly").getNodeValue().equals("true") ? "readonly" : "";
+		String disabled = attributes.getNamedItem("disabled") != null && attributes.getNamedItem("disabled").getNodeValue().equals("true") ? "disabled" : "";
 		//return "<input type=\"text\" style=\"display:$display\" id=\"edit{$i}_{$j}\" name=\"$this->target[$i]\" value=\"".str_replace('"','&quot;',$this->value)."\" $readonly $disabled/>";
 		return "<input type=\"text\" style=\"display:block\" id=\"edit" + i + "_" + j + "\" name=\""+this.target+"["+i+"]\" value=\"" + this.value.replace("\"", "&quot;") +"\" "+readonly+disabled+"/>";
 	}

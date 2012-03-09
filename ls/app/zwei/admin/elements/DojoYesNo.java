@@ -6,6 +6,8 @@ package zwei.admin.elements;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Node;
+
 /**
  * Filtering Select Yes No
  *
@@ -36,7 +38,7 @@ public class DojoYesNo extends Element {
 	 * @param form
 	 */
 	public DojoYesNo(String name, String target,
-			String value, Map<String, String> params, Map<String, String> form) {
+			String value, Node params, Map<String, String> form) {
 		super(name, target, value, params, form);
 		// TODO Auto-generated constructor stub
 	}

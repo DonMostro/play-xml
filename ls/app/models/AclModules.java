@@ -23,6 +23,10 @@ public class AclModules extends JPA implements Serializable
     @Column(name="title")
     private String title;
 
+    @JoinTable(name="acl_modules")
+    @Transient
+    private String parentTitle;    
+    
     @Column(name="module")
     private String module;
 
@@ -72,14 +76,14 @@ public class AclModules extends JPA implements Serializable
 	public AclModules(int id, String title, String module, String linkable, String approved, String tree, AclModules parentId)
 	{
 		//System.out.println(parentId.id);
-		//this.parentTitle=parentId.title;
+		this.parentTitle=parentId.title;
 		this.id = id;
 		this.title = title;
 		this.module = module;
 		this.linkable = linkable;
 		this.approved = approved;
 		this.tree = tree;
-		this.parentId = parentId;
+		//this.parentId = parentId;
 		//this.parentTitle = parentTitle;
 	}
 
@@ -339,26 +343,10 @@ public class AclModules extends JPA implements Serializable
 				"select new AclModules(mod.id, mod.title, mod.module, mod.linkable, mod.approved, mod.tree, mod.parentId) " +
 				"from AclModules mod " 
 		);
-				
-		/*
-		query = this.em().createNativeQuery(
-				"SELECT acl_modules.id, acl_modules.title, acl_modules.module, acl_modules.linkable, " +
-				"acl_modules.approved, acl_modules.tree, " +
-				"parent.id AS parentId, parent.title AS parentTitle " +
-				"FROM acl_modules " +
-				"LEFT join acl_modules parent " +
-				"ON acl_modules.parent_id = parent.id ", 
-				AclModules.class);
-		*/
+	
 		
 		if (query.getResultList().size() > 0) {
 			modules = query.getResultList();
-			
-			Iterator<AclModules> it;
-			it = modules.iterator();
-			AclModules i = it.next();
-			int parentId = i.parentId.id;
-			String parentTitle = i.parentId.title;
 		}
 
 		return modules;

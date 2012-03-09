@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import zwei.admin.ClassInvoker;
 import zwei.admin.Controller;
@@ -271,7 +272,7 @@ public class EditTableDojo extends Controller{
 		Object[] elementParams;
 		Object[] editArguments = null;
 		ClassInvoker elementClass = null;
-		Class[] classParamsTypes = new Class[] { String.class, String.class, String.class, Map.class };//Clases de parámetros del constructor element
+		Class[] classParamsTypes = new Class[] { String.class, String.class, String.class, Node.class, Map.class };//Clases de parámetros del constructor element
 		Class[] methodArgsTypes = new Class[] { String.class, String.class };//Clases de argumentos de método element.edit
 
 
@@ -321,9 +322,9 @@ public class EditTableDojo extends Controller{
 					attributes.getNamedItem("name").getNodeValue(), 
 					attributes.getNamedItem("target").getNodeValue(),
 					value,
+					this.elements.item(j),
 					this.form
 				};
-
 				editArguments = new Object [] { 
 					"0",
 					pfx+j
