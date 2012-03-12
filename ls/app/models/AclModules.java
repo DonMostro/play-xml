@@ -255,7 +255,7 @@ public class AclModules extends JPA implements Serializable
 		Query query = null;
 		
 		//[TODO] por falta de conocimientos en HQL se usa createNativeQuery(String SQL, class JPA) por ahora, 
-		// lo ideal sería usar createQuery(String HQL) para aprovechar las ventajas de Hibernate.
+		// lo ideal sería usar createQuery(String HQL).
 		query = this.em().createNativeQuery(
 			    "SELECT acl_modules.id, acl_modules.parent_id, acl_modules.title, " +
 			    "acl_modules.module, acl_modules.tree, acl_modules.approved, acl_modules.linkable " +
@@ -320,10 +320,6 @@ public class AclModules extends JPA implements Serializable
 						if (branch2.getTree().equals("1")) {
 							subnodes2.put("id", branch2.getId());
 							subnodes2.put("label", branch2.getTitle());
-						
-							//S ystem.out.println("parent_id: " + key);
-							//S ystem.out.println("id: " + branch2.getId());
-							//S ystem.out.println("module: " + branch2.getModule());
 							
 							if (branch2.getLinkable().equals("1")) {
 								subnodes2.put("url", "/application/components?p=" + branch2.getModule());
@@ -332,7 +328,6 @@ public class AclModules extends JPA implements Serializable
 						}
 					}
 					subnodes.put("children", childrens);
-					//subnodes.put("children", subnodesWrapper);
 				}
 			}
 			nodes.put(key, subnodes);
@@ -343,7 +338,6 @@ public class AclModules extends JPA implements Serializable
 	
 	public List<AclModules> findAll() {
 		List<AclModules> modules = null;
-		List<AclModules> returns = null;
 		Query query = null;
 		
 		query = this.em().createQuery(
@@ -357,5 +351,116 @@ public class AclModules extends JPA implements Serializable
 		}
 
 		return modules;
+	}
+	
+	/**
+	 * Retorna findAll() como ArrayList<HashMap<String, String>>  en lugar de List<AclModules>
+	 * @param returnMap
+	 * @return
+	 */
+	public ArrayList<HashMap<String, String>> findAll(boolean returnArray) 
+	{
+		HashMap<String, String> modules; 
+		ArrayList<HashMap<String, String>> rows = new ArrayList<HashMap<String, String>>();
+		
+		List<AclModules> modulesList = this.findAll();
+		for (AclModules module : modulesList) {
+			modules = new HashMap<String, String>();
+			modules.put("title", module.getTitle());
+			modules.put("id", Integer.toString(module.getId()));
+			rows.add(modules);
+		}
+		return rows;
+	}
+	
+	
+	
+	
+	/**
+ 	 * Selecciona diferentes módulos, para combobox de módulo padre 
+	 * evitando colisiones de nombre dada la relación recursiva 
+	 * en módulo "módulos"
+	 * @return
+	 */
+
+	public List<AclModules> selectDistinct()
+	{
+		Query query = null;
+		List<AclModules> modules = null;
+		
+		query = this.em().createQuery(
+				"select distinct new AclModules(mod.id, mod.title as parentTitle) " +
+				"from AclModules mod " 
+		);
+
+		if (query.getResultList().size() > 0) {
+			modules = query.getResultList();
+		}
+
+		return modules;
+	}
+
+	
+	/**
+	 * Retorna selectDistinct() como HashMap<String, String> en lugar de List<AclModules>
+	 * @param returnMap
+	 * @return
+	 */
+	public ArrayList<HashMap<String, String>>  selectDistinct(boolean returnArray) 
+	{
+		HashMap<String, String> modules; 
+		ArrayList<HashMap<String, String>> rows = new ArrayList<HashMap<String, String>>();
+		
+		List<AclModules> modulesList = this.selectDistinct();
+		for (AclModules module : modulesList) {
+			modules = new HashMap<String, String>();
+			modules.put("parent_title", module.getTitle());
+			modules.put("id", Integer.toString(module.getId()));
+			rows.add(modules);
+		}
+		return rows;
+	}
+	
+	
+	/**
+	 * Selecciona diferentes módulos para uso general
+     * [TODO] redunda la funcionalidad de selectDistinct() pero cambia 'parent_title' por 'module_title'
+	 */
+
+	public List<AclModules> getModules()
+	{
+		Query query = null;
+		List<AclModules> modules = null;
+		
+		query = this.em().createQuery(
+				"select distinct new AclModules(mod.id, mod.title as moduleTitle) " +
+				"from AclModules mod " 
+		);
+
+		if (query.getResultList().size() > 0) {
+			modules = query.getResultList();
+		}
+
+		return modules;
+	}
+	
+	/**
+	 * Retorna getModules() como ArrayList<HashMap<String, String>>  en lugar de List<AclModules>
+	 * @param returnMap
+	 * @return
+	 */
+	public ArrayList<HashMap<String, String>> getModules(boolean returnArray) 
+	{
+		HashMap<String, String> modules; 
+		ArrayList<HashMap<String, String>> rows = new ArrayList<HashMap<String, String>>();
+		
+		List<AclModules> modulesList = this.getModules();
+		for (AclModules module : modulesList) {
+			modules = new HashMap<String, String>();
+			modules.put("title", module.getTitle());
+			modules.put("id", Integer.toString(module.getId()));
+			rows.add(modules);
+		}
+		return rows;
 	}
 }

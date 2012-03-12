@@ -1,6 +1,8 @@
 package zwei.admin.elements;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +149,6 @@ public class DojoFilteringSelect extends Element
 	
 	public String options()
 	{
-		System.out.println("llamado DojoFilteringSelect.options()");
 		String options = "";
         //Map<String, String> selected;
 		NamedNodeMap attributes = this.params.getAttributes();
@@ -155,12 +156,14 @@ public class DojoFilteringSelect extends Element
         try {
 	        if (attributes.getNamedItem("table") != null) {
 	            String id = attributes.getNamedItem("table_pk") != null ? attributes.getNamedItem("table_pk").getNodeValue() : "id";
-	    		String modelName = "models." + StringU.toClassName(attributes.getNamedItem("table").getNodeValue());
-	    		System.out.println(modelName);
+	    		String className = "models." + StringU.toClassName(attributes.getNamedItem("table").getNodeValue());
+	    		//System.out.println(modelName);
+	    		Class<?> classBase = Class.forName(className);
+	    		
 	    		ClassInvoker modelClass = null;
 	    		
 	    		try {
-	    			modelClass = new ClassInvoker(modelName);
+	    			modelClass = new ClassInvoker(className);
 	    		} catch (SecurityException e) {
 	    			// TODO Auto-generated catch block
 	    			e.printStackTrace();
@@ -173,10 +176,18 @@ public class DojoFilteringSelect extends Element
 	    		}
 	            
 	    		String field = null;
+	    		ArrayList<HashMap<String, String>> rows = null;
 	            
 	            if (attributes.getNamedItem("table_method") != null) {
-	            	System.out.println(attributes.getNamedItem("table_method").getNodeValue());
-	                String method = StringU.toFunctionName(attributes.getNamedItem("table_method").getNodeValue());
+	                String methodName = StringU.toFunctionName(attributes.getNamedItem("table_method").getNodeValue());
+	                Class[] methodArgTypes = {boolean.class};
+	                Object[] arguments = {true}; 
+	                modelClass = new ClassInvoker(className);
+	                
+	                modelClass.initMethod(methodName, methodArgTypes);
+	                rows = (ArrayList<HashMap<String, String>>) modelClass.getResult(null, arguments);
+	                
+	                
 	               // $select = $model->$method();
 	            } else {
 	                if (attributes.getNamedItem("table_field") != null){
@@ -187,16 +198,19 @@ public class DojoFilteringSelect extends Element
 	                    //$select = $model->select(array($this->params['FIELD'], $id));
 	                }    
 	            }
-	            List<JPA> rows = null;
+	            
 	            //Zwei_Utils_Debug::writeBySettings($select->__toString(), 'query_log');
 	            
-	            Query query = JPA.em().createQuery("SELECT new " + modelName + "(" + id +","+ "title" + ") FROM " + modelName);
+	            Query query = JPA.em().createQuery("SELECT new " + className + "(mod." + id +", mod."+ "title" + ") FROM " + className + " mod");
 	
 	            if (query.getResultList().size() > 0) {
-	            	rows = query.getResultList();
+	            	
+	            	List rowsx = query.getResultList();
+
 	            }	
 	            
-	        
+	            
+	            
 	            if (this.value == null) {
 	                value = this.form.get(this.target) != null ? this.form.get(this.target) : null;
 	            } /* else {
@@ -208,38 +222,51 @@ public class DojoFilteringSelect extends Element
 	            	options += "<option value=\""+attributes.getNamedItem("default_value")+"\">"+attributes.getNamedItem("default_text")+"</option>\r\n";
 	        	}
 
-	            Iterator<JPA> it = rows.iterator();
+
+	            for (int i=0; i<rows.size(); i++) {
+	            	String selected = rows.get(i).get(id).equals(this.value) ? "selected" : "";
+	            	String optionText = "";
+					if (attributes.getNamedItem("table_field") != null) {
+						optionText = rows.get(i).get(attributes.getNamedItem("table_field").getNodeValue());
+						System.out.println("table_field:"+attributes.getNamedItem("table_field").getNodeValue());
+					} else {
+						optionText = rows.get(i).get(attributes.getNamedItem("field").getNodeValue());
+						System.out.println("field:"+attributes.getNamedItem("field").getNodeValue());
+					}
+					
+					
+					options += "<option value=\""+rows.get(i).get(id)+"\" "+ "selected" +" >"+optionText+"</option>\r\n";
+	            	
+	            }
 	            
+	            //Iterator it = rows.iterator();
+	            /*
 	            while (it.hasNext()) {
-	            	  Object element = it.next(); 
-	            	  System.out.print(element + " ");
+	            	Object element = it.next(); 
+		             
+		            	
+	            	//String selected = it. .findKey(id).toString() == this.value ? "selected" : "";
+					if (attributes.getNamedItem("table_field") != null) {
+					    options += "<option value=\""+element +"\" "+ "selected" +" >"+attributes.getNamedItem("table_field").getNodeValue()+"</option>\r\n";
+					} else {
+					    options += "<option value=\""+element+"\" "+ "selected" +" >"+attributes.getNamedItem("field").getNodeValue()+"</option>\r\n";
+					} 
 	            }
-	            
+				*/
 	            
 			    
 			    
-				for (JPA row : rows) {
-					System.out.println(row);
-					/*
-	                String selected = row .findKey(id).toString() == this.value ? "selected" : "";
-	                if (attributes.getNamedItem("table_field") != null) {
-	                    options += "<option value=\""+row.findKey(id).toString()+"\" "+selected+" >"+attributes.getNamedItem("table_field")+"</option>\r\n";
-	                } else {
-	                    options += "<option value=\""+row.findKey(id).toString()+"\" "+selected+" >"+attributes.getNamedItem("field")+"</option>\r\n";
-	                } 
-	                */   
-	            }
-	        } else {
-	        	
-	        	System.out.println("attributes.getNamedItem(\"table\") == null");
 	
+				
+	        } else {
+
 	        	
 	            if (this.value == null) {
 	                value = this.form.get(this.target) != null ? this.form.get(this.target) : null;
 	            }/* else {
 	                value = this.value;
 	            }*/
-	        	System.out.println("value="+this.value);
+	        	//System.out.println("value="+this.value);
 	            
 	            
 	            options = "";
