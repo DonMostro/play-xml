@@ -5,10 +5,10 @@
 	<classpathentry kind="src" path="crud"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/play.jar" sourcepath="/home/rodrigo/play/framework"/>
-	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/hibernate-entitymanager.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/rodrigo/play/framework/lib/hibernate-entitymanager.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/ehcache-1.5.0.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/mail.jar"/>
-	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/rodrigo/play/framework/lib/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/commons-httpclient.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/lucene-analyzers-2.3.1.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/junit-4.4.jar"/>
@@ -58,5 +58,6 @@
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/mysql-connector-java-5.1.8-bin.jar"/>
 	<classpathentry kind="lib" path="/home/rodrigo/play/framework/lib/joda-time-1.6.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/flexjson/flexjson/2.0/flexjson-2.0.jar" sourcepath="M2_REPO/net/sf/flexjson/flexjson/2.0/flexjson-2.0-sources.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

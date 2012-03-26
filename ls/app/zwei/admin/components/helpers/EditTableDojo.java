@@ -308,6 +308,7 @@ public class EditTableDojo extends Controller{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				try {
 					elementClass.initMethod(methodName, methodArgsTypes);
 				} catch (SecurityException e1) {

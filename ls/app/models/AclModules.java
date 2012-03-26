@@ -66,8 +66,6 @@ public class AclModules extends JPA implements Serializable
 	 */
 	public AclModules(int id, String title, String module, String linkable, String approved, String tree)
 	{
-		//System.out.println(parentId.id);
-		//this.parentTitle=parentId.title;
 		this.id = id;
 		this.title = title;
 		this.module = module;
@@ -82,7 +80,6 @@ public class AclModules extends JPA implements Serializable
 	 */
 	public AclModules(int id, String title, String module, String linkable, String approved, String tree, AclModules parentId)
 	{
-		//System.out.println(parentId.id);
 		this.parentTitle=parentId.title;
 		this.id = id;
 		this.title = title;
@@ -90,8 +87,6 @@ public class AclModules extends JPA implements Serializable
 		this.linkable = linkable;
 		this.approved = approved;
 		this.tree = tree;
-		//this.parentId = parentId;
-		//this.parentTitle = parentTitle;
 	}
 
 	
@@ -424,7 +419,7 @@ public class AclModules extends JPA implements Serializable
 	
 	/**
 	 * Selecciona diferentes módulos para uso general
-     * [TODO] redunda la funcionalidad de selectDistinct() pero cambia 'parent_title' por 'module_title'
+     * [TODO] redunda la funcionalidad de selectDistinct() pero cambia 'parent_title' por 'module_title' para evitar colisione
 	 */
 
 	public List<AclModules> getModules()

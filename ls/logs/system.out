@@ -1,0 +1,8 @@
+11:21:41,511 INFO  ~ Starting /home/rodrigo/proyectos/testPlay
+11:21:41,539 INFO  ~ Module crud is available (/home/rodrigo/play/modules/crud)
+11:21:41,540 INFO  ~ Module antify is available (/home/rodrigo/play/modules/antify-1.0)
+11:21:43,787 INFO  ~ 
+11:21:43,788 INFO  ~ Go to http://localhost:9000/@tests to run the tests
+11:21:43,789 INFO  ~ 
+11:21:43,789 WARN  ~ You're running Play! in DEV mode
+11:21:44,026 ERROR ~ Could not bind on port 9000

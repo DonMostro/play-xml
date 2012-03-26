@@ -50,9 +50,15 @@ public class Xml
 
 		doc.getDocumentElement().normalize();
 	
+		/**
+		 * En caso de agregar un nuevo tipo de nodo XML, 
+		 * agregar nuevo atributo tipo NodeList en Controller (super Class), 
+		 * este es el lugar indicado para inicializarlo con doc.getElementsByTagName(String); 
+		 */
 		this.component = doc.getDocumentElement();
 		this.elements = doc.getElementsByTagName("element");
 		this.tabs = doc.getElementsByTagName("tab");
+		
 	}
 	
 	/**

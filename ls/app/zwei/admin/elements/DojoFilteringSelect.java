@@ -158,7 +158,6 @@ public class DojoFilteringSelect extends Element
 	            String id = attributes.getNamedItem("table_pk") != null ? attributes.getNamedItem("table_pk").getNodeValue() : "id";
 	    		String className = "models." + StringU.toClassName(attributes.getNamedItem("table").getNodeValue());
 	    		//System.out.println(modelName);
-	    		Class<?> classBase = Class.forName(className);
 	    		
 	    		ClassInvoker modelClass = null;
 	    		
@@ -209,7 +208,7 @@ public class DojoFilteringSelect extends Element
 
 	            }	
 	            
-	            
+
 	            
 	            if (this.value == null) {
 	                value = this.form.get(this.target) != null ? this.form.get(this.target) : null;

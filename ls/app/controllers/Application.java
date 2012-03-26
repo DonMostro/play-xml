@@ -83,11 +83,7 @@ public class Application extends Controller
 		 */
 		Class[] componentParamsTypes = new Class[] { String.class, String[].class, Map.class };//Clases de parámetros del constructor
 		Object[] componentParams = new Object [] { p, null, form };//Valores parámetros del constructor
-		/**
-		 * Información de argumentos método
-		 */
-		//Class[] methodArgsTypes = new Class[] { Map.class };//Clases de argumentos de método 
-		//Object[] methodArgs = new Object [] { form };//Valores argumentos de método
+
 		
 		try {
 			componentClass = new ClassInvoker(className, componentParamsTypes);
@@ -95,7 +91,6 @@ public class Application extends Controller
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			content = "<p>No se encuentra <i>" + className + ".xml</i></p>";
 			render(content);
@@ -119,11 +114,9 @@ public class Application extends Controller
 			//content = (String) componentClass.getResult(componentParams, methodArgs);
 			content = (String) componentClass.getResult(componentParams);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			content = "<p>IllegalArgumentException para <i>" + className + "." + methodName + "(), " + e.getMessage() + "</i></p>";
 			render(content);
-
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,6 +163,4 @@ public class Application extends Controller
 		Task task = new Task(title).save();
 		renderJSON(task);
 	}
-	
-	
 }
