@@ -44,7 +44,7 @@ public class Application extends Controller
 	public static void components(String p)
 	{
 		Map<String, String> form = params.allSimple();//All request params
-		String pathComponents = (String) Play.configuration.get("application.pathComponents");
+		String pathComponents = Play.configuration.getProperty("application.pathComponents");
 		String content = "";
 		ClassInvoker componentClass = null;
 		

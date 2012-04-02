@@ -285,12 +285,12 @@ public class EditTableDojo extends Controller{
 				attributes.getNamedItem("value").setNodeValue("");
 			}
 			*/
-    
+			String value = "";
 			/*
 			if (attributes.getNamedItem("value") != null || isset($form->{$node['TARGET']}) && is_array($form->{$node['TARGET']})){
 				$value = $node['VALUE'][$i];
 			} else {*/
-				String value = form.get(attributes.getNamedItem("target").getNodeValue()) != null ? form.get(attributes.getNamedItem("target").getNodeValue()) : "";
+				value = form.get(attributes.getNamedItem("target").getNodeValue()) != null ? form.get(attributes.getNamedItem("target").getNodeValue()) : "";
 			//}
     
 			if (attributes.getNamedItem(mode).getNodeValue().equals("true")) {
